@@ -3,6 +3,7 @@ package ar.edu.utn.gestion_inventario.service;
 import ar.edu.utn.gestion_inventario.dto.proveedor.ProveedorDetailDTO;
 import ar.edu.utn.gestion_inventario.dto.proveedor.ProveedorListDTO;
 import ar.edu.utn.gestion_inventario.dto.proveedor.ProveedorRequestDTO;
+import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.model.Proveedor;
 import ar.edu.utn.gestion_inventario.repository.ProveedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,17 @@ public class ProveedorService {
     {
         Proveedor proveedor = proveedorRepository.save(new Proveedor(dto.getNombre(), dto.getTelefono(), dto.getEmail(), dto.getDireccion()));
         return new ProveedorDetailDTO(proveedor.getId(), proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail(), proveedor.getEmail());
+    }
+    public ProveedorDetailDTO modificarProveedor(Long id, ProveedorRequestDTO dto)
+    {
+        return proveedorRepository.findById(id).map(proveedor -> {
+            proveedor.setNombre(dto.getNombre());
+            proveedor.setDireccion(dto.getDireccion());
+            proveedor.setTelefono(dto.getTelefono());
+            proveedor = proveedorRepository.save(proveedor);
+
+            return new ProveedorDetailDTO(proveedor.getId(), proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail(), proveedor.getDireccion());
+        }).orElseThrow(() -> new NotFoundException("El ID ingresado no corresponse a un proveedor"));
     }
     public List<ProveedorListDTO> listarProveedores()
     {
