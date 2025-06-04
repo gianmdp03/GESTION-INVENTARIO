@@ -3,12 +3,14 @@ package ar.edu.utn.gestion_inventario.service;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoDetailDTO;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoListDTO;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoRequestDTO;
+import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.model.Descuento;
 import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.model.Proveedor;
 import ar.edu.utn.gestion_inventario.repository.DescuentoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProveedorRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -34,7 +36,15 @@ public class ProductoService {
         Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor, descuento));
         return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
     }
-    
+    public ProductoDetailDTO modificarPrecio(Long id, ProductoRequestDTO dto)
+    {
+        return productoRepository.findById(id).map(producto -> {
+            producto.setPrecioUnitario(dto.getPrecioUnitario());
+            producto = productoRepository.save(producto);
+
+            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
+        }).orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));
+    }
     public List<ProductoListDTO> listarProductos()
     {
         return productoRepository.findAll().stream().map(producto -> new ProductoListDTO(producto.getId(), producto.getNombre(),
