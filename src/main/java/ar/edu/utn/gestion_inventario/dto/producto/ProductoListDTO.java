@@ -1,4 +1,5 @@
 package ar.edu.utn.gestion_inventario.dto.producto;
 
-public record ProductoListDTO() {
-}
+import java.math.BigDecimal;
+
+public record ProductoListDTO (Long id, String nombre, String categoria, BigDecimal precioUnitario){}
