@@ -50,4 +50,15 @@ public class ProductoService {
         return productoRepository.findAll().stream().map(producto -> new ProductoListDTO(producto.getId(), producto.getNombre(),
                 producto.getCategoria(), producto.getPrecioUnitario())).toList();
     }
+    public void eliminarProducto(Long id) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Producto no encontrado"));
+
+        Descuento descuento = producto.getDescuento();
+        if (descuento != null) {
+            descuento.getProductos().remove(producto);
+        }
+
+        productoRepository.delete(producto);
+    }
 }
