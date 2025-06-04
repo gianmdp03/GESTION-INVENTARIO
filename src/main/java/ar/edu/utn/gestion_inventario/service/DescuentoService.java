@@ -4,6 +4,7 @@ import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoDetailDTO;
 import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoListDTO;
 import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoRequestDTO;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoShortListDTO;
+import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.model.Descuento;
 import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.repository.DescuentoRepository;
@@ -36,6 +37,23 @@ public class DescuentoService {
         }
         descuento = descuentoRepository.save(descuento);
         return new DescuentoDetailDTO(descuento.getId(), descuento.getDescripcion(), descuento.getPorcentaje(), descuento.getFechaInicio(), descuento.getFechaFin(), productos);
+    }
+    public DescuentoDetailDTO modificarDescuento(Long id, DescuentoRequestDTO dto)
+    {
+        return descuentoRepository.findById(id).map(descuento -> {
+            descuento.setPorcentaje(dto.getPorcentaje());
+            descuento.setFechaInicio(dto.getFechaInicio());
+            descuento.setFechaFin(dto.getFechaFin());
+
+            descuento = descuentoRepository.save(descuento);
+
+            List<ProductoShortListDTO> productosDTO = descuento.getProductos().stream()
+                    .map(p -> new ProductoShortListDTO(p.getId(), p.getNombre()))
+                    .toList();
+
+            return new DescuentoDetailDTO(descuento.getId(), descuento.getDescripcion(), descuento.getPorcentaje(), descuento.getFechaInicio(),
+                    descuento.getFechaFin(), productosDTO);
+        }).orElseThrow(() -> new NotFoundException("Descuento no encontrado"));
     }
     public List<DescuentoListDTO> listarDescuentos()
     {
