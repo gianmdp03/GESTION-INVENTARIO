@@ -14,13 +14,13 @@ public class ExistenciaRequestDTO {
     @NotNull
     private LocalDate fechaVencimiento;
     @NotNull
-    private String codigoBarras;
+    private Long idProducto;
 
-    public ExistenciaRequestDTO(int cantidad, LocalDate fechaEntrada, LocalDate fechaVencimiento, String codigoBarras) {
+    public ExistenciaRequestDTO(int cantidad, LocalDate fechaEntrada, LocalDate fechaVencimiento, Long idProducto) {
         this.cantidad = cantidad;
         this.fechaEntrada = fechaEntrada;
         this.fechaVencimiento = fechaVencimiento;
-        this.codigoBarras = codigoBarras;
+        this.idProducto = idProducto;
     }
 
     public int getCantidad() {
@@ -47,12 +47,12 @@ public class ExistenciaRequestDTO {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public String getCodigoBarras() {
-        return codigoBarras;
+    public Long getIdProducto() {
+        return idProducto;
     }
 
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
     }
 }
 
