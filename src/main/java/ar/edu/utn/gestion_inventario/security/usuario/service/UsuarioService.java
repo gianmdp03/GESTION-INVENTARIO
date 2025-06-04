@@ -3,6 +3,7 @@ package ar.edu.utn.gestion_inventario.security.usuario.service;
 import ar.edu.utn.gestion_inventario.ENUM.TipoUsuario;
 import ar.edu.utn.gestion_inventario.security.usuario.model.Usuario;
 import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,6 +26,12 @@ public class UsuarioService implements UserDetailsService {
             usuario.setRol(TipoUsuario.EMPLEADO);
         }
         return usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    public void eliminarUsuarioPorUsername(String username)
+    {
+        usuarioRepository.deleteByUsername(username);
     }
 
     @Override
