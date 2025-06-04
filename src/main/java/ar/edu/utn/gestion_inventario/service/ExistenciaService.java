@@ -1,6 +1,7 @@
 package ar.edu.utn.gestion_inventario.service;
 
 import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoDetailDTO;
+import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoListDTO;
 import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoRequestDTO;
 import ar.edu.utn.gestion_inventario.dto.existencia.ExistenciaDetailDTO;
 import ar.edu.utn.gestion_inventario.dto.existencia.ExistenciaListDTO;
@@ -31,5 +32,10 @@ public class ExistenciaService {
         Producto producto = productoRepository.getReferenceById(dto.getIdProducto());
         Existencia existencia = existenciaRepository.save(new Existencia(dto.getCantidad(), dto.getFechaEntrada(), dto.getFechaVencimiento(), producto));
         return new ExistenciaDetailDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre());
+    }
+
+    public List<ExistenciaListDTO> listarExistencia(){
+        return existenciaRepository.findAll().stream().map(existencia ->
+                new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
     }
 }
