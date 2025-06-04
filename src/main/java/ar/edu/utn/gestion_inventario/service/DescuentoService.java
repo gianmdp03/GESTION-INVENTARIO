@@ -1,6 +1,7 @@
 package ar.edu.utn.gestion_inventario.service;
 
 import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoDetailDTO;
+import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoListDTO;
 import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoRequestDTO;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoShortListDTO;
 import ar.edu.utn.gestion_inventario.model.Descuento;
@@ -21,6 +22,7 @@ public class DescuentoService {
     private DescuentoRepository descuentoRepository;
     @Autowired
     private ProductoRepository productoRepository;
+
     public DescuentoDetailDTO crearDescuento(DescuentoRequestDTO dto)
     {
         List<ProductoShortListDTO> productos = new ArrayList<>();
@@ -34,5 +36,10 @@ public class DescuentoService {
         }
         descuento = descuentoRepository.save(descuento);
         return new DescuentoDetailDTO(descuento.getId(), descuento.getDescripcion(), descuento.getPorcentaje(), descuento.getFechaInicio(), descuento.getFechaFin(), productos);
+    }
+    public List<DescuentoListDTO> listarDescuentos()
+    {
+        return descuentoRepository.findAll().stream().map(descuento ->
+                new DescuentoListDTO(descuento.getId(), descuento.getPorcentaje(), descuento.getFechaInicio(), descuento.getFechaFin())).toList();
     }
 }
