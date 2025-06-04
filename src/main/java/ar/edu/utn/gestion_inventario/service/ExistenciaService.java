@@ -1,13 +1,9 @@
 package ar.edu.utn.gestion_inventario.service;
 
-import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoDetailDTO;
-import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoListDTO;
-import ar.edu.utn.gestion_inventario.dto.descuento.DescuentoRequestDTO;
 import ar.edu.utn.gestion_inventario.dto.existencia.ExistenciaDetailDTO;
 import ar.edu.utn.gestion_inventario.dto.existencia.ExistenciaListDTO;
 import ar.edu.utn.gestion_inventario.dto.existencia.ExistenciaRequestDTO;
-import ar.edu.utn.gestion_inventario.dto.producto.ProductoShortListDTO;
-import ar.edu.utn.gestion_inventario.model.Descuento;
+import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.model.Existencia;
 import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.repository.ExistenciaRepository;
@@ -15,8 +11,6 @@ import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,5 +35,13 @@ public class ExistenciaService {
 
     public void eliminarExistencia(Long id){
         existenciaRepository.deleteById(id);
+    }
+
+    public ExistenciaDetailDTO modificarStock(Long id,  int stock){
+        return existenciaRepository.findById(id).map(existencia -> {
+            existencia.setCantidad(stock);
+            existencia = existenciaRepository.save(existencia);
+            return new ExistenciaDetailDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre());
+        }).orElseThrow(() -> new NotFoundException("el id ingresado no corresponde a una existencia"));
     }
 }
