@@ -1,6 +1,7 @@
 package ar.edu.utn.gestion_inventario.security.usuario.service;
 
 import ar.edu.utn.gestion_inventario.ENUM.TipoUsuario;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioListDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.model.Usuario;
 import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
@@ -10,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -26,6 +29,11 @@ public class UsuarioService implements UserDetailsService {
             usuario.setRol(TipoUsuario.EMPLEADO);
         }
         return usuarioRepository.save(usuario);
+    }
+
+    public List<UsuarioListDTO> listarUsuarios()
+    {
+        return usuarioRepository.findAll().stream().map(usuario -> new UsuarioListDTO(usuario.getUsername(), usuario.getTipoUsuario())).toList();
     }
 
     @Transactional
