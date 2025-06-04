@@ -4,15 +4,38 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DescuentoRequestDTO {
+
     private String descripcion;
+
     @NotNull
     private BigDecimal porcentaje;
+
     @NotNull
     private LocalDate fechaInicio;
+
     @NotNull
     private LocalDate fechaFin;
+
+    private List<Long> productos = new ArrayList<>();
+
+    public DescuentoRequestDTO(BigDecimal porcentaje, LocalDate fechaInicio, LocalDate fechaFin, List<Long> productos) {
+        this.porcentaje = porcentaje;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.productos = productos;
+    }
+
+    public DescuentoRequestDTO(String descripcion, BigDecimal porcentaje, LocalDate fechaInicio, LocalDate fechaFin, List<Long> productos) {
+        this.descripcion = descripcion;
+        this.porcentaje = porcentaje;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.productos = productos;
+    }
 
     public DescuentoRequestDTO(String descripcion, BigDecimal porcentaje, LocalDate fechaInicio, LocalDate fechaFin) {
         this.descripcion = descripcion;
@@ -57,5 +80,13 @@ public class DescuentoRequestDTO {
 
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public List<Long> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Long> productos) {
+        this.productos = productos;
     }
 }
