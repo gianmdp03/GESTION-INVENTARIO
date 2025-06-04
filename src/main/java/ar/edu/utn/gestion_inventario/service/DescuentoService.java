@@ -9,10 +9,12 @@ import ar.edu.utn.gestion_inventario.model.Descuento;
 import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.repository.DescuentoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,5 +61,22 @@ public class DescuentoService {
     {
         return descuentoRepository.findAll().stream().map(descuento ->
                 new DescuentoListDTO(descuento.getId(), descuento.getPorcentaje(), descuento.getFechaInicio(), descuento.getFechaFin())).toList();
+    }
+    @Transactional
+    public void eliminarDescuentosExpirados()
+    {
+        List<Descuento> expirados = descuentoRepository.findAllByFechaFinBefore(LocalDate.now());
+        for(Descuento d : expirados)
+        {
+            for(Producto p : d.getProductos())
+            {
+                p.setDescuento(null);
+            }
+        }
+        List<Producto> productosActualizados = expirados.stream().flatMap(descuento ->
+                descuento.getProductos().stream()).toList();
+
+        productoRepository.saveAll(productosActualizados);
+        descuentoRepository.deleteAll(expirados);
     }
 }
