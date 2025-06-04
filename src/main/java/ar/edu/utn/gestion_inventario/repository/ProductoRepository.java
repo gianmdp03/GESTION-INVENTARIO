@@ -1,4 +1,7 @@
 package ar.edu.utn.gestion_inventario.repository;
 
-public interface ProductoRepository {
+import ar.edu.utn.gestion_inventario.model.Producto;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductoRepository extends JpaRepository<Producto, Long> {
 }
