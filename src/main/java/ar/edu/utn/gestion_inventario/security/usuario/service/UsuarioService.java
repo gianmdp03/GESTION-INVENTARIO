@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static ar.edu.utn.gestion_inventario.security.usuario.validation.UsuarioValidator.*;
+
 @Service
 public class UsuarioService implements UserDetailsService {
     @Autowired
@@ -23,6 +25,7 @@ public class UsuarioService implements UserDetailsService {
 
     public Usuario crearUsuario(Usuario usuario)
     {
+        comprobarSiExisteUsername(usuario.getUsername(), usuarioRepository);
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         if(usuario.getTipoUsuario()==null)
         {
@@ -33,12 +36,15 @@ public class UsuarioService implements UserDetailsService {
 
     public List<UsuarioListDTO> listarUsuarios()
     {
-        return usuarioRepository.findAll().stream().map(usuario -> new UsuarioListDTO(usuario.getUsername(), usuario.getTipoUsuario())).toList();
+        List<UsuarioListDTO> lista = usuarioRepository.findAll().stream().map(usuario -> new UsuarioListDTO(usuario.getUsername(), usuario.getTipoUsuario())).toList();
+        comprobarListaVacia(lista);
+        return lista;
     }
 
     @Transactional
     public void eliminarUsuarioPorUsername(String username)
     {
+        comprobarUsername(username, usuarioRepository);
         usuarioRepository.deleteByUsername(username);
     }
 
