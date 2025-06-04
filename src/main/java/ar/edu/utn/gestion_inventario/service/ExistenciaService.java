@@ -38,4 +38,8 @@ public class ExistenciaService {
         return existenciaRepository.findAll().stream().map(existencia ->
                 new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
     }
+
+    public void eliminarExistencia(Long id){
+        existenciaRepository.deleteById(id);
+    }
 }
