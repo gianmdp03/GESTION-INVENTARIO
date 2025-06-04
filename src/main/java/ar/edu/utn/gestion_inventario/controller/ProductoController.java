@@ -1,4 +1,13 @@
 package ar.edu.utn.gestion_inventario.controller;
 
+import ar.edu.utn.gestion_inventario.service.ProductoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/producto")
 public class ProductoController {
+    @Autowired
+    private ProductoService productoService;
 }
