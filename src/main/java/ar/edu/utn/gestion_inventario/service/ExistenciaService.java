@@ -46,7 +46,7 @@ public class ExistenciaService {
     }
     public List<ExistenciaListDTO> mostrarExistenciasPorCantidad(int cantidad)
     {
-        return existenciaRepository.findAllByStockLessThanOrderByStockAsc(cantidad).stream().map(existencia -> new ExistenciaListDTO(
+        return existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad).stream().map(existencia -> new ExistenciaListDTO(
                 existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
     }
 }
