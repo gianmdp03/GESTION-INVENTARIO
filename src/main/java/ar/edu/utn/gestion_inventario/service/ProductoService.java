@@ -75,4 +75,15 @@ public class ProductoService {
     public ProductoDetailDTO visualizarProductoPorCodigoDeBarras(String codigoBarras){
         return productoRepository.findBycodigoBarras(codigoBarras).map(producto ->  new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecioUnitario(),producto.getCodigoBarras())).orElseThrow();
     }
+    public void eliminarProductoPorCodigoDeBarras(String codigoBarra){
+        Producto producto = productoRepository.findBycodigoBarras(codigoBarra)
+                .orElseThrow(() -> new NotFoundException("Producto no encontrado"));
+
+        Descuento descuento = producto.getDescuento();
+        if (descuento != null) {
+            descuento.getProductos().remove(producto);
+        }
+        productoRepository.deleteByCodigoBarras(codigoBarra);
+    }
+
 }

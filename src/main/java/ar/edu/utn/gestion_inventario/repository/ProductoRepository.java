@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
     List<Producto> findAllByProveedorEmail(String email);
     List<Producto> findAllByCategoria(String categoria);
-     Optional<Producto> findBycodigoBarras(String codigoBarras);
+    Optional<Producto> findBycodigoBarras(String codigoBarras);
+    void deleteByCodigoBarras(String codigo);
 
 }
