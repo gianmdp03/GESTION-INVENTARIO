@@ -20,4 +20,10 @@ public class ProveedorController {
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(proveedorService.crearProveedor(dto));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProveedorDetailDTO> modificarProveedor(@PathVariable Long id, @Valid @RequestBody ProveedorRequestDTO dto)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(proveedorService.modificarProveedor(id, dto));
+    }
 }
