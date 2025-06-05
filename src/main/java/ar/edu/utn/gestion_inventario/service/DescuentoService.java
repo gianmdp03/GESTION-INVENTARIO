@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Validated
@@ -62,6 +63,7 @@ public class DescuentoService {
         return descuentoRepository.findAll().stream().map(descuento ->
                 new DescuentoListDTO(descuento.getId(), descuento.getPorcentaje(), descuento.getFechaInicio(), descuento.getFechaFin())).toList();
     }
+
     @Transactional
     public void eliminarDescuentosExpirados()
     {
@@ -78,5 +80,13 @@ public class DescuentoService {
 
         productoRepository.saveAll(productosActualizados);
         descuentoRepository.deleteAll(expirados);
+    }
+
+    public DescuentoDetailDTO visualizarDescuentoPorId(Long id){
+        List<ProductoShortListDTO> lista;
+        Descuento descuento = descuentoRepository.getReferenceById(id);
+        lista = descuento.getProductos().stream().map(producto->new ProductoShortListDTO(producto.getId(),producto.getNombre())).toList();
+        return descuentoRepository.findById(id).map(desc -> new DescuentoDetailDTO(desc.getId(),desc.getDescripcion(),desc.getPorcentaje(),desc.getFechaInicio(),desc.getFechaFin(),lista)).orElseThrow(
+                ()->new NotFoundException("El id ingresado no existe"));
     }
 }
