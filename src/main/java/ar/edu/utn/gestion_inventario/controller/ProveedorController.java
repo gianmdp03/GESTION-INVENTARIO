@@ -42,8 +42,15 @@ public class ProveedorController {
         return ResponseEntity.status(HttpStatus.OK).body(proveedorService.visualizarProveedorPorId(id));
     }
 
+    @GetMapping("/{email}")
     public ResponseEntity<ProveedorDetailDTO> visualizarProveedorPorEmail(String email)
     {
         return ResponseEntity.status(HttpStatus.OK).body(proveedorService.visualizarProveedorPorEmail(email));
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminarProveedorPorId(Long id)
+    {
+        proveedorService.eliminarProveedorPorId(id);
     }
 }
