@@ -28,6 +28,7 @@ public class Usuario implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + tipoUsuario.name()));
     }
+
     public Usuario() {
     }
 

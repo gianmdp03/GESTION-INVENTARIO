@@ -21,9 +21,15 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
     {
         return httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/pelicula").hasRole("ADMINISTRADOR")
-                .requestMatchers(HttpMethod.GET, "/api/pelicula").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                //USUARIO
+                .requestMatchers(HttpMethod.POST, "/api/auth/admin").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/auth").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.PUT, "/api/auth").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers(HttpMethod.PATCH, "/api/auth").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.GET, "/api/auth").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.GET, "/api/auth/*").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.DELETE, "/api/auth/*").hasRole("ADMINISTRADOR")
+                //
                 .anyRequest().authenticated()
         ).userDetailsService(usuarioService).httpBasic(Customizer.withDefaults()).sessionManagement(
                 session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
