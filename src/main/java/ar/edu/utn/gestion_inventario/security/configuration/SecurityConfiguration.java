@@ -17,17 +17,17 @@ public class SecurityConfiguration {
     @Autowired
     private UsuarioService usuarioService;
 
-    /*@Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
     {
         return httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/pelicula").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/api/pelicula").hasAnyRole("ADMIN", "EMPLEADO")
+                .requestMatchers(HttpMethod.POST, "/api/pelicula").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.GET, "/api/pelicula").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 .anyRequest().authenticated()
         ).userDetailsService(usuarioService).httpBasic(Customizer.withDefaults()).sessionManagement(
                 session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
-    }*/
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception
