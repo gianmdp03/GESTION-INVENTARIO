@@ -44,6 +44,13 @@ public class ExistenciaService {
             return new ExistenciaDetailDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre());
         }).orElseThrow(() -> new NotFoundException("el id ingresado no corresponde a una existencia"));
     }
+
+
+    public ExistenciaDetailDTO visualizarExistenciaPorId(Long id){
+        return existenciaRepository.findById(id).map(existencia->new ExistenciaDetailDTO(existencia.getId(),existencia.getCantidad(),existencia.getFechaEntrada(),existencia.getFechaVencimiento(),existencia.getProducto().getNombre())).orElseThrow();
+    }
+
+
     public List<ExistenciaListDTO> mostrarExistenciasPorCantidad(int cantidad)
     {
         return existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad).stream().map(existencia -> new ExistenciaListDTO(
@@ -54,4 +61,5 @@ public class ExistenciaService {
         return existenciaRepository.findAllByOrderByCantidadDesc().stream().map(existencia -> new ExistenciaListDTO(existencia.getId(),
                 existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getProducto().getNombre())).toList();
     }
+
 }

@@ -60,4 +60,8 @@ public class ProductoService {
 
         productoRepository.delete(producto);
     }
+
+    public ProductoDetailDTO visualizarProductoPorId(Long id){
+        return productoRepository.findById(id).map(producto -> new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecioUnitario(),producto.getCodigoBarras())).orElseThrow();
+    }
 }
