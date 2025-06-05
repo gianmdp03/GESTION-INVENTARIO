@@ -21,7 +21,7 @@ public class ProveedorValidator {
     {
         if(lista.isEmpty())
         {
-            throw new BadRequestException("No se encontraron proveedores");
+            throw new NotFoundException("No se encontraron proveedores");
         }
     }
     public void verificarSiYAExisteEmail(String email){
