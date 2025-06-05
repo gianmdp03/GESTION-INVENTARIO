@@ -23,10 +23,15 @@ public class UsuarioController {
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.crearUsuario(usuario));
     }
-    @PutMapping("/{username}")
+    @PutMapping
     public ResponseEntity<UsuarioDetailDTO> modificarUsuario(@Valid @RequestBody UsuarioPutRequestDTO dto)
     {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.modificarUsername(dto.getUsernameActual(), dto.getUsernameNuevo()));
+    }
+    @PatchMapping("/{username}")
+    public ResponseEntity<UsuarioDetailDTO> convertirEnAdministrador(@RequestBody String username)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.convertirEnAdministrador(username));
     }
     @GetMapping
     public ResponseEntity<List<UsuarioDetailDTO>> listarUsuario()
