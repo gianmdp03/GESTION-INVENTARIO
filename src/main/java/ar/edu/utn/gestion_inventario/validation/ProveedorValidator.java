@@ -10,10 +10,10 @@ import java.util.List;
 
 public class ProveedorValidator {
     @Autowired
-    private ProveedorRepository proveedorRepositorio;
+    private ProveedorRepository proveedorRepository;
 
     public void verificarSiExisteID(Long id){
-        if(!(proveedorRepositorio.existsById(id))){
+        if(!(proveedorRepository.existsById(id))){
             throw  new NotFoundException("El id no existe");
         }
     }
@@ -25,7 +25,7 @@ public class ProveedorValidator {
         }
     }
     public void verificarSiYAExisteEmail(String email){
-        if((proveedorRepositorio.existsByEmail(email))){
+        if(proveedorRepository.existsByEmail(email)){
             throw  new NotFoundException("El email ya existe");
         }
     }
