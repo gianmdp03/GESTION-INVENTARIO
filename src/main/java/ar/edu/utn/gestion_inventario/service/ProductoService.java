@@ -10,7 +10,6 @@ import ar.edu.utn.gestion_inventario.model.Proveedor;
 import ar.edu.utn.gestion_inventario.repository.DescuentoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProveedorRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -69,5 +68,8 @@ public class ProductoService {
     {
         return productoRepository.findAllByCategoria(categoria).stream().map(existencia ->
                 new ProductoListDTO(existencia.getId(), existencia.getNombre(), existencia.getCategoria(), existencia.getPrecioUnitario())).toList();
+    }
+    public ProductoDetailDTO visualizarProductoPorId(Long id){
+        return productoRepository.findById(id).map(producto -> new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecioUnitario(),producto.getCodigoBarras())).orElseThrow();
     }
 }

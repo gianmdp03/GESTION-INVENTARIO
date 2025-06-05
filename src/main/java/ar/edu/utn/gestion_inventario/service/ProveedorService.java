@@ -40,4 +40,15 @@ public class ProveedorService {
                 proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail())).toList();
         return dto;
     }
+    public ProveedorDetailDTO visualizarProveedorPorId(Long id){
+        return proveedorRepository.findById(id).map(proveedor -> new ProveedorDetailDTO(proveedor.getId(),proveedor.getNombre(),proveedor.getTelefono(),proveedor.getEmail(),proveedor.getDireccion())).orElseThrow();
+    }
+
+    public ProveedorDetailDTO visualizarProveedorPorEmail(String email){
+        return proveedorRepository.findByEmail(email).map(proveedor -> new ProveedorDetailDTO(proveedor.getId(),proveedor.getNombre(),proveedor.getTelefono(),proveedor.getEmail(),proveedor.getDireccion())).orElseThrow();
+    }
+
+    public void eliminarProveedorPorId(Long id){
+        proveedorRepository.deleteById(id);
+    }
 }

@@ -1,7 +1,7 @@
 package ar.edu.utn.gestion_inventario.security.usuario.service;
 
 import ar.edu.utn.gestion_inventario.ENUM.TipoUsuario;
-import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioListDTO;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioDetailDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.model.Usuario;
 import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
@@ -23,7 +23,7 @@ public class UsuarioService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Usuario crearUsuario(Usuario usuario)
+    public UsuarioDetailDTO crearUsuario(Usuario usuario)
     {
         comprobarSiExisteUsername(usuario.getUsername(), usuarioRepository);
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
@@ -31,12 +31,13 @@ public class UsuarioService implements UserDetailsService {
         {
             usuario.setRol(TipoUsuario.EMPLEADO);
         }
-        return usuarioRepository.save(usuario);
+        usuario = usuarioRepository.save(usuario);
+        return new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario());
     }
 
-    public List<UsuarioListDTO> listarUsuarios()
+    public List<UsuarioDetailDTO> listarUsuarios()
     {
-        List<UsuarioListDTO> lista = usuarioRepository.findAll().stream().map(usuario -> new UsuarioListDTO(usuario.getUsername(), usuario.getTipoUsuario())).toList();
+        List<UsuarioDetailDTO> lista = usuarioRepository.findAll().stream().map(usuario -> new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario())).toList();
         comprobarListaVacia(lista);
         return lista;
     }
