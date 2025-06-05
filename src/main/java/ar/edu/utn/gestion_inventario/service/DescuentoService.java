@@ -89,4 +89,9 @@ public class DescuentoService {
         return descuentoRepository.findById(id).map(desc -> new DescuentoDetailDTO(desc.getId(),desc.getDescripcion(),desc.getPorcentaje(),desc.getFechaInicio(),desc.getFechaFin(),lista)).orElseThrow(
                 ()->new NotFoundException("El id ingresado no existe"));
     }
+
+    public List<DescuentoListDTO> filtrarPorFechaInicioASC(){
+        return descuentoRepository.findAllByOrderByFechaInicioAsc().stream().map(descuento -> new DescuentoListDTO(descuento.getId(),descuento.getPorcentaje(),descuento.getFechaInicio(),descuento.getFechaFin())).toList();
+    }
+    
 }
