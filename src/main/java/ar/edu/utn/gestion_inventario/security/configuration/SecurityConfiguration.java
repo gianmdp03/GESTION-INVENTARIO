@@ -29,7 +29,15 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.GET, "/api/auth").hasRole("ADMINISTRADOR")
                 .requestMatchers(HttpMethod.GET, "/api/auth/*").hasRole("ADMINISTRADOR")
                 .requestMatchers(HttpMethod.DELETE, "/api/auth/*").hasRole("ADMINISTRADOR")
-                //
+                //PROVEEDOR
+                .requestMatchers("/api/proveedor").hasRole("ADMINISTRADOR")
+                .requestMatchers("/api/proveedor/*").hasRole("ADMINISTRADOR")
+                .requestMatchers("/api/proveedor/email/*").hasRole("ADMINISTRADOR")
+                //DESCUENTO
+
+                //EXISTENCIA
+
+                //PRODUCTO
                 .anyRequest().authenticated()
         ).userDetailsService(usuarioService).httpBasic(Customizer.withDefaults()).sessionManagement(
                 session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
