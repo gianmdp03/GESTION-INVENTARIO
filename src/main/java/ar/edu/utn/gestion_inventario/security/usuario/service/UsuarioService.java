@@ -5,6 +5,7 @@ import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioDetailDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.model.Usuario;
 import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
+import ar.edu.utn.gestion_inventario.security.usuario.validation.UsuarioValidator;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,18 +16,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static ar.edu.utn.gestion_inventario.security.usuario.validation.UsuarioValidator.*;
-
 @Service
 public class UsuarioService implements UserDetailsService {
+
     @Autowired
     private UsuarioRepository usuarioRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UsuarioValidator usuarioValidator;
+
     public UsuarioDetailDTO crearUsuario(Usuario usuario)
     {
-        comprobarSiExisteUsername(usuario.getUsername(), usuarioRepository);
+        usuarioValidator.comprobarSiExisteUsername(usuario.getUsername());
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         if(usuario.getTipoUsuario()==null)
         {
@@ -35,10 +39,19 @@ public class UsuarioService implements UserDetailsService {
         usuario = usuarioRepository.save(usuario);
         return new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario());
     }
+    public UsuarioDetailDTO modificarUsername(String usernameActual, String usernameNuevo)
+    {
+
+        return usuarioRepository.findByUsername(usernameActual).map(user -> {
+            user.setUsername(usernameNuevo);
+            user = usuarioRepository.save(user);
+            return new UsuarioDetailDTO(user.getUsername(), user.getTipoUsuario());
+        }).orElseThrow(() -> new NotFoundException("El nombre de usuario ingresado no corresponde a un usuario existente"));
+    }
     public List<UsuarioDetailDTO> listarUsuarios()
     {
         List<UsuarioDetailDTO> lista = usuarioRepository.findAll().stream().map(usuario -> new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario())).toList();
-        comprobarListaVacia(lista);
+        usuarioValidator.comprobarListaVacia(lista);
         return lista;
     }
 
@@ -51,7 +64,7 @@ public class UsuarioService implements UserDetailsService {
     @Transactional
     public void eliminarUsuarioPorUsername(String username)
     {
-        comprobarUsername(username, usuarioRepository);
+        usuarioValidator.comprobarUsername(username);
         usuarioRepository.deleteByUsername(username);
     }
 

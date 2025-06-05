@@ -4,25 +4,29 @@ import ar.edu.utn.gestion_inventario.exception.ConflictException;
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioDetailDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class UsuarioValidator {
-    public static void comprobarSiExisteUsername(String username, UsuarioRepository usuarioRepository)
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    public void comprobarSiExisteUsername(String username)
     {
         if(usuarioRepository.existsByUsername(username))
         {
             throw new ConflictException("El nombre de usuario ingresado ya existe");
         }
     }
-    public static void comprobarUsername(String username, UsuarioRepository usuarioRepository)
+    public void comprobarUsername(String username)
     {
         if(!(usuarioRepository.existsByUsername(username)))
         {
             throw new NotFoundException("El nombre de usuario no existe");
         }
     }
-    public static void comprobarListaVacia(List<UsuarioDetailDTO> usuarios)
+    public void comprobarListaVacia(List<UsuarioDetailDTO> usuarios)
     {
         if(usuarios.isEmpty())
         {
