@@ -42,14 +42,14 @@ public class ProveedorController {
         return ResponseEntity.status(HttpStatus.OK).body(proveedorService.visualizarProveedorPorId(id));
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<ProveedorDetailDTO> visualizarProveedorPorEmail(String email)
+    @GetMapping("/email/{email}")
+    public ResponseEntity<ProveedorDetailDTO> visualizarProveedorPorEmail(@PathVariable String email)
     {
         return ResponseEntity.status(HttpStatus.OK).body(proveedorService.visualizarProveedorPorEmail(email));
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarProveedorPorId(Long id)
+    public void eliminarProveedorPorId(@PathVariable Long id)
     {
         proveedorService.eliminarProveedorPorId(id);
     }
