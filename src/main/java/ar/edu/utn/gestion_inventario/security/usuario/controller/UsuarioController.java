@@ -18,6 +18,11 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @PostMapping("/admin")
+    public ResponseEntity<UsuarioDetailDTO> crearUsuarioSinAutorizacion(@Valid @RequestBody Usuario usuario)
+    {
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.crearUsuario(usuario));
+    }
     @PostMapping
     public ResponseEntity<UsuarioDetailDTO> crearUsuario(@Valid @RequestBody Usuario usuario)
     {
