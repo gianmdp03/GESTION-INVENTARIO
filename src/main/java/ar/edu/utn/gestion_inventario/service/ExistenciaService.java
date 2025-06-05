@@ -8,6 +8,7 @@ import ar.edu.utn.gestion_inventario.model.Existencia;
 import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.repository.ExistenciaRepository;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
+import ar.edu.utn.gestion_inventario.validation.ExistenciaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +22,9 @@ public class ExistenciaService {
     @Autowired
     private ProductoRepository productoRepository;
 
+    @Autowired
+    private ExistenciaValidator existenciaValidator;
+
     public ExistenciaDetailDTO crearExistencia(ExistenciaRequestDTO dto)
     {
         Producto producto = productoRepository.getReferenceById(dto.getIdProducto());
@@ -29,11 +33,13 @@ public class ExistenciaService {
     }
     public List<ExistenciaListDTO> listarExistencia()
     {
+        existenciaValidator.verificarListaVacia(existenciaRepository.findAll());
         return existenciaRepository.findAll().stream().map(existencia ->
                 new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
     }
     public void eliminarExistencia(Long id)
     {
+        existenciaValidator.verificarSiExisteID(id);
         existenciaRepository.deleteById(id);
     }
     public ExistenciaDetailDTO modificarStock(Long id,  int stock)
