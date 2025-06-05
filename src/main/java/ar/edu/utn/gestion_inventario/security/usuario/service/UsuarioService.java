@@ -39,7 +39,7 @@ public class UsuarioService implements UserDetailsService {
         usuario = usuarioRepository.save(usuario);
         return new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario());
     }
-
+    @Transactional
     public UsuarioDetailDTO modificarUsername(String usernameActual, String usernameNuevo)
     {
         usuarioValidator.comprobarSiExisteUsername(usernameNuevo);

@@ -1,6 +1,7 @@
 package ar.edu.utn.gestion_inventario.security.usuario.controller;
 
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioDetailDTO;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioPutRequestDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.model.Usuario;
 import ar.edu.utn.gestion_inventario.security.usuario.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -22,7 +23,11 @@ public class UsuarioController {
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.crearUsuario(usuario));
     }
-
+    @PutMapping("/{username}")
+    public ResponseEntity<UsuarioDetailDTO> modificarUsuario(@Valid @RequestBody UsuarioPutRequestDTO dto)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.modificarUsername(dto.getUsernameActual(), dto.getUsernameNuevo()));
+    }
     @GetMapping
     public ResponseEntity<List<UsuarioDetailDTO>> listarUsuario()
     {
