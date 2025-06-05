@@ -49,22 +49,15 @@ public class ExistenciaService {
                 new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
     }
 
-    public void eliminarExistencia(Long id)
-    {
-        existenciaValidator.verificarSiExisteID(id);
-        existenciaRepository.deleteById(id);
-    }
-
     public ExistenciaDetailDTO visualizarExistenciaPorId(Long id)
     {
         return existenciaRepository.findById(id).map(existencia->new ExistenciaDetailDTO(existencia.getId(),existencia.getCantidad(),existencia.getFechaEntrada(),existencia.getFechaVencimiento(),existencia.getProducto().getNombre())).orElseThrow(() -> new NotFoundException("El id ingresado no existe"));
     }
 
-    public List<ExistenciaListDTO> mostrarExistenciasPorCantidad(int cantidad)
+    public void eliminarExistencia(Long id)
     {
-        existenciaValidator.verificarListaVacia(existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad));
-        return existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad).stream().map(existencia -> new ExistenciaListDTO(
-                existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
+        existenciaValidator.verificarSiExisteID(id);
+        existenciaRepository.deleteById(id);
     }
 
     public List<ExistenciaListDTO> mostrarExistenciasConMasCantidad()
