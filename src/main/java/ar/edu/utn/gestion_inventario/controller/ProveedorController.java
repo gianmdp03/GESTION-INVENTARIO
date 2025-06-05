@@ -1,13 +1,23 @@
 package ar.edu.utn.gestion_inventario.controller;
 
+import ar.edu.utn.gestion_inventario.dto.proveedor.ProveedorDetailDTO;
+import ar.edu.utn.gestion_inventario.dto.proveedor.ProveedorRequestDTO;
 import ar.edu.utn.gestion_inventario.service.ProveedorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/proveedor")
 public class ProveedorController {
     @Autowired
     private ProveedorService proveedorService;
+
+    @PostMapping
+    public ResponseEntity<ProveedorDetailDTO> crearProveedor(@Valid @RequestBody ProveedorRequestDTO dto)
+    {
+        return ResponseEntity.status(HttpStatus.CREATED).body(proveedorService.crearProveedor(dto));
+    }
 }
