@@ -9,15 +9,13 @@ import ar.edu.utn.gestion_inventario.model.Descuento;
 import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.repository.DescuentoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Validated
