@@ -48,4 +48,7 @@ public class ProveedorService {
         return proveedorRepository.findByEmail(email).map(proveedor -> new ProveedorDetailDTO(proveedor.getId(),proveedor.getNombre(),proveedor.getTelefono(),proveedor.getEmail(),proveedor.getDireccion())).orElseThrow();
     }
 
+    public void eliminarProveedorPorId(Long id){
+        proveedorRepository.deleteById(id);
+    }
 }
