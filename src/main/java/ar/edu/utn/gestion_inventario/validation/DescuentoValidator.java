@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 public class DescuentoValidator {
-    @Autowired
-    private DescuentoRepository descuentoRepository;
-
     public void verificarListaVacia(List<Descuento> lista)
     {
         if(lista.isEmpty()){
