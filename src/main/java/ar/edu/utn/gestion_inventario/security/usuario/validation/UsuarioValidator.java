@@ -2,7 +2,7 @@ package ar.edu.utn.gestion_inventario.security.usuario.validation;
 
 import ar.edu.utn.gestion_inventario.exception.ConflictException;
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
-import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioListDTO;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioDetailDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class UsuarioValidator {
             throw new NotFoundException("El nombre de usuario no existe");
         }
     }
-    public static void comprobarListaVacia(List<UsuarioListDTO> usuarios)
+    public static void comprobarListaVacia(List<UsuarioDetailDTO> usuarios)
     {
         if(usuarios.isEmpty())
         {
