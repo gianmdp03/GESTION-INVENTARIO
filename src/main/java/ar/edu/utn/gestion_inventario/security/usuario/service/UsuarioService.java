@@ -35,7 +35,6 @@ public class UsuarioService implements UserDetailsService {
         usuario = usuarioRepository.save(usuario);
         return new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario());
     }
-
     public List<UsuarioDetailDTO> listarUsuarios()
     {
         List<UsuarioDetailDTO> lista = usuarioRepository.findAll().stream().map(usuario -> new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario())).toList();
@@ -43,7 +42,7 @@ public class UsuarioService implements UserDetailsService {
         return lista;
     }
 
-    public UsuarioDetailDTO mostrarUsuario(String username)
+    public UsuarioDetailDTO mostrarUsuarioPorUsername(String username)
     {
         Usuario usuario = usuarioRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("El username ingresado no existe"));
         return new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario());
