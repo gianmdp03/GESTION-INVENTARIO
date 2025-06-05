@@ -12,6 +12,7 @@ import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProveedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
@@ -71,5 +72,20 @@ public class ProductoService {
     }
     public ProductoDetailDTO visualizarProductoPorId(Long id){
         return productoRepository.findById(id).map(producto -> new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecioUnitario(),producto.getCodigoBarras())).orElseThrow();
+    }
+    public ProductoDetailDTO visualizarProductoPorCodigoDeBarras(String codigoBarras){
+        return productoRepository.findByCodigoBarras(codigoBarras).map(producto ->  new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecioUnitario(),producto.getCodigoBarras())).orElseThrow();
+    }
+
+   @Transactional
+    public void eliminarProductoPorCodigoDeBarras(String codigoBarra){
+        Producto producto = productoRepository.findByCodigoBarras(codigoBarra)
+                .orElseThrow(() -> new NotFoundException("Producto no encontrado"));
+
+        Descuento descuento = producto.getDescuento();
+        if (descuento != null) {
+            descuento.getProductos().remove(producto);
+        }
+        productoRepository.deleteByCodigoBarras(codigoBarra);
     }
 }
