@@ -38,7 +38,11 @@ public class UsuarioController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarUsuarios());
     }
-
+    @GetMapping("/{username}")
+    public ResponseEntity<UsuarioDetailDTO> mostrarUsuarioPorUsername(@PathVariable String username)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.mostrarUsuarioPorUsername(username));
+    }
     @DeleteMapping("/{username}")
     public ResponseEntity<Void> eliminarPorUsername(@PathVariable String username)
     {
