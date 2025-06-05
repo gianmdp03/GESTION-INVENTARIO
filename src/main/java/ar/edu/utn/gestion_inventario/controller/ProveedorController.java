@@ -41,4 +41,9 @@ public class ProveedorController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(proveedorService.visualizarProveedorPorId(id));
     }
+
+    public ResponseEntity<ProveedorDetailDTO> visualizarProveedorPorEmail(String email)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(proveedorService.visualizarProveedorPorEmail(email));
+    }
 }
