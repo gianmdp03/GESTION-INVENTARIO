@@ -35,4 +35,10 @@ public class ProveedorController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(proveedorService.listarProveedores());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProveedorDetailDTO> visualizarProveedorPorId(@PathVariable Long id)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(proveedorService.visualizarProveedorPorId(id));
+    }
 }
