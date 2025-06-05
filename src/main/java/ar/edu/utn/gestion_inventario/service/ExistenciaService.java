@@ -32,17 +32,7 @@ public class ExistenciaService {
         Existencia existencia = existenciaRepository.save(new Existencia(dto.getCantidad(), dto.getFechaEntrada(), dto.getFechaVencimiento(), producto));
         return new ExistenciaDetailDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre());
     }
-    public List<ExistenciaListDTO> listarExistencia()
-    {
-        existenciaValidator.verificarListaVacia(existenciaRepository.findAll());
-        return existenciaRepository.findAll().stream().map(existencia ->
-                new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
-    }
-    public void eliminarExistencia(Long id)
-    {
-        existenciaValidator.verificarSiExisteID(id);
-        existenciaRepository.deleteById(id);
-    }
+
     public ExistenciaDetailDTO modificarStock(Long id,  int stock)
     {
         return existenciaRepository.findById(id).map(existencia -> {
@@ -50,6 +40,19 @@ public class ExistenciaService {
             existencia = existenciaRepository.save(existencia);
             return new ExistenciaDetailDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre());
         }).orElseThrow(() -> new NotFoundException("el id ingresado no corresponde a una existencia"));
+    }
+
+    public List<ExistenciaListDTO> listarExistencia()
+    {
+        existenciaValidator.verificarListaVacia(existenciaRepository.findAll());
+        return existenciaRepository.findAll().stream().map(existencia ->
+                new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
+    }
+
+    public void eliminarExistencia(Long id)
+    {
+        existenciaValidator.verificarSiExisteID(id);
+        existenciaRepository.deleteById(id);
     }
 
     public ExistenciaDetailDTO visualizarExistenciaPorId(Long id)
