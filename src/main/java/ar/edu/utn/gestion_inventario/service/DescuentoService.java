@@ -9,6 +9,7 @@ import ar.edu.utn.gestion_inventario.model.Descuento;
 import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.repository.DescuentoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
+import ar.edu.utn.gestion_inventario.validation.DescuentoValidator;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class DescuentoService {
     private DescuentoRepository descuentoRepository;
     @Autowired
     private ProductoRepository productoRepository;
+
+    @Autowired
+    private DescuentoValidator descuentoValidator;
 
     public DescuentoDetailDTO crearDescuento(DescuentoRequestDTO dto)
     {
@@ -58,10 +62,10 @@ public class DescuentoService {
     }
     public List<DescuentoListDTO> listarDescuentos()
     {
+        descuentoValidator.verificarListaVacia(descuentoRepository.findAll());
         return descuentoRepository.findAll().stream().map(descuento ->
                 new DescuentoListDTO(descuento.getId(), descuento.getPorcentaje(), descuento.getFechaInicio(), descuento.getFechaFin())).toList();
     }
-
     @Transactional
     public void eliminarDescuentosExpirados()
     {
@@ -79,7 +83,6 @@ public class DescuentoService {
         productoRepository.saveAll(productosActualizados);
         descuentoRepository.deleteAll(expirados);
     }
-
     public DescuentoDetailDTO visualizarDescuentoPorId(Long id){
         List<ProductoShortListDTO> lista;
         Descuento descuento = descuentoRepository.getReferenceById(id);
@@ -87,9 +90,7 @@ public class DescuentoService {
         return descuentoRepository.findById(id).map(desc -> new DescuentoDetailDTO(desc.getId(),desc.getDescripcion(),desc.getPorcentaje(),desc.getFechaInicio(),desc.getFechaFin(),lista)).orElseThrow(
                 ()->new NotFoundException("El id ingresado no existe"));
     }
-
     public List<DescuentoListDTO> filtrarPorFechaInicioASC(){
         return descuentoRepository.findAllByOrderByFechaInicioAsc().stream().map(descuento -> new DescuentoListDTO(descuento.getId(),descuento.getPorcentaje(),descuento.getFechaInicio(),descuento.getFechaFin())).toList();
     }
-    
 }
