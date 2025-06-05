@@ -75,7 +75,7 @@ public class Usuario implements UserDetails {
         return tipoUsuario;
     }
 
-    public void setRol(TipoUsuario tipoUsuario) {
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 }

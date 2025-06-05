@@ -34,11 +34,12 @@ public class UsuarioService implements UserDetailsService {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         if(usuario.getTipoUsuario()==null)
         {
-            usuario.setRol(TipoUsuario.EMPLEADO);
+            usuario.setTipoUsuario(TipoUsuario.EMPLEADO);
         }
         usuario = usuarioRepository.save(usuario);
         return new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario());
     }
+
     public UsuarioDetailDTO modificarUsername(String usernameActual, String usernameNuevo)
     {
 
@@ -54,7 +55,14 @@ public class UsuarioService implements UserDetailsService {
         usuarioValidator.comprobarListaVacia(lista);
         return lista;
     }
-
+    public UsuarioDetailDTO convertirEnAdministrador(String username)
+    {
+        return usuarioRepository.findByUsername(username).map(usuario -> {
+            usuario.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+            usuario = usuarioRepository.save(usuario);
+            return new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario());
+        }).orElseThrow(() -> new NotFoundException("El nombre de usuario ingresado no corresponde a un usuario existente"));
+    }
     public UsuarioDetailDTO mostrarUsuarioPorUsername(String username)
     {
         Usuario usuario = usuarioRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("El username ingresado no existe"));
