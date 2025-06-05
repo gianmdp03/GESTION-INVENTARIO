@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ExistenciaRepository extends JpaRepository<Existencia, Long> {
     List<Existencia> findAllByCantidadLessThanOrderByCantidadAsc(int cantidad);
+    List<Existencia> findAllByOrderByCantidadDesc();
 }
