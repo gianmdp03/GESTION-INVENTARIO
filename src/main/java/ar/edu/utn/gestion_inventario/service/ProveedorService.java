@@ -40,4 +40,7 @@ public class ProveedorService {
                 proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail())).toList();
         return dto;
     }
+    public ProveedorDetailDTO visualizarProveedorPorId(Long id){
+        return proveedorRepository.findById(id).map(proveedor -> new ProveedorDetailDTO(proveedor.getId(),proveedor.getNombre(),proveedor.getTelefono(),proveedor.getEmail(),proveedor.getDireccion())).orElseThrow();
+    }
 }
