@@ -42,7 +42,7 @@ public class UsuarioService implements UserDetailsService {
 
     public UsuarioDetailDTO modificarUsername(String usernameActual, String usernameNuevo)
     {
-
+        usuarioValidator.comprobarSiExisteUsername(usernameNuevo);
         return usuarioRepository.findByUsername(usernameActual).map(user -> {
             user.setUsername(usernameNuevo);
             user = usuarioRepository.save(user);
