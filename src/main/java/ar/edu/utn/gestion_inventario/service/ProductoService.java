@@ -60,9 +60,9 @@ public class ProductoService {
         }
         productoRepository.delete(producto);
     }
-    public List<ProductoListDTO> buscarPorProveedor(Proveedor proveedor)
+    public List<ProductoListDTO> buscarPorProveedor(String email)
     {
-        return productoRepository.findAllByProveedor(proveedor).stream().map(existencia ->
+        return productoRepository.findAllByProveedorEmail(email).stream().map(existencia ->
                 new ProductoListDTO(existencia.getId(), existencia.getNombre(), existencia.getCategoria(), existencia.getPrecioUnitario())).toList();
     }
     public List<ProductoListDTO> buscarPorCategoria(String categoria)
