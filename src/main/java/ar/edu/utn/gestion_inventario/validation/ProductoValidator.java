@@ -1,10 +1,8 @@
 package ar.edu.utn.gestion_inventario.validation;
 
-import ar.edu.utn.gestion_inventario.exception.BadRequestException;
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
-import ar.edu.utn.gestion_inventario.repository.ProveedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

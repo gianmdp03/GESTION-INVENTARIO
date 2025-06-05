@@ -28,6 +28,7 @@ public class ProveedorService {
         Proveedor proveedor = proveedorRepository.save(new Proveedor(dto.getNombre(), dto.getTelefono(), dto.getEmail(), dto.getDireccion()));
         return new ProveedorDetailDTO(proveedor.getId(), proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail(), proveedor.getEmail());
     }
+
     public ProveedorDetailDTO modificarProveedor(Long id, ProveedorRequestDTO dto)
     {
         return proveedorRepository.findById(id).map(proveedor -> {
@@ -39,6 +40,7 @@ public class ProveedorService {
             return new ProveedorDetailDTO(proveedor.getId(), proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail(), proveedor.getDireccion());
         }).orElseThrow(() -> new NotFoundException("El ID ingresado no corresponse a un proveedor"));
     }
+
     public List<ProveedorListDTO> listarProveedores()
     {
         List<Proveedor> lista = proveedorRepository.findAll();
@@ -47,6 +49,7 @@ public class ProveedorService {
                 proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail())).toList();
         return dto;
     }
+
     public ProveedorDetailDTO visualizarProveedorPorId(Long id){
         return proveedorRepository.findById(id).map(proveedor -> new ProveedorDetailDTO(proveedor.getId(),proveedor.getNombre(),proveedor.getTelefono(),proveedor.getEmail(),proveedor.getDireccion()))
                 .orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));

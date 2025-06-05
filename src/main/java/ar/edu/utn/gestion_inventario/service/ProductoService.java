@@ -10,9 +10,7 @@ import ar.edu.utn.gestion_inventario.model.Proveedor;
 import ar.edu.utn.gestion_inventario.repository.DescuentoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProveedorRepository;
-import ar.edu.utn.gestion_inventario.validation.DescuentoValidator;
 import ar.edu.utn.gestion_inventario.validation.ProductoValidator;
-import ar.edu.utn.gestion_inventario.validation.ProveedorValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +42,7 @@ public class ProductoService {
         Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor, descuento));
         return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
     }
+
     public ProductoDetailDTO modificarPrecio(Long id, ProductoRequestDTO dto)
     {
         return productoRepository.findById(id).map(producto -> {
@@ -53,6 +52,7 @@ public class ProductoService {
             return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
         }).orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));
     }
+
     public List<ProductoListDTO> listarProductos()
     {
         List<Producto> lista = productoRepository.findAll();
@@ -60,6 +60,7 @@ public class ProductoService {
         return lista.stream().map(producto -> new ProductoListDTO(producto.getId(), producto.getNombre(),
             producto.getCategoria(), producto.getPrecioUnitario())).toList();
     }
+
     public void eliminarProducto(Long id) {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Producto no encontrado"));
@@ -70,6 +71,7 @@ public class ProductoService {
         }
         productoRepository.delete(producto);
     }
+
     public List<ProductoListDTO> buscarPorProveedor(String email)
     {
         List<Producto> lista = productoRepository.findAllByProveedorEmail(email);
@@ -77,6 +79,7 @@ public class ProductoService {
         return lista.stream().map(producto ->
                 new ProductoListDTO(producto.getId(), producto.getNombre(), producto.getCategoria(), producto.getPrecioUnitario())).toList();
     }
+
     public List<ProductoListDTO> buscarPorCategoria(String categoria)
     {
         List<Producto> lista = productoRepository.findAllByCategoria(categoria);
@@ -84,10 +87,12 @@ public class ProductoService {
         return lista.stream().map(producto ->
                 new ProductoListDTO(producto.getId(), producto.getNombre(), producto.getCategoria(), producto.getPrecioUnitario())).toList();
     }
+
     public ProductoDetailDTO visualizarProductoPorId(Long id){
         return productoRepository.findById(id).map(producto -> new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecioUnitario(),producto.getCodigoBarras()))
                 .orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));
     }
+
     public ProductoDetailDTO visualizarProductoPorCodigoDeBarras(String codigoBarras){
         return productoRepository.findByCodigoBarras(codigoBarras).map(producto ->  new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecioUnitario(),producto.getCodigoBarras()))
                 .orElseThrow(() -> new NotFoundException("El codigo de barras ingresado no existe"));
