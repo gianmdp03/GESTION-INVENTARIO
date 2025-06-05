@@ -91,6 +91,7 @@ public class DescuentoService {
                 ()->new NotFoundException("El id ingresado no existe"));
     }
     public List<DescuentoListDTO> filtrarPorFechaInicioASC(){
+        descuentoValidator.verificarListaVacia(descuentoRepository.findAll());
         return descuentoRepository.findAllByOrderByFechaInicioAsc().stream().map(descuento -> new DescuentoListDTO(descuento.getId(),descuento.getPorcentaje(),descuento.getFechaInicio(),descuento.getFechaFin())).toList();
     }
 }

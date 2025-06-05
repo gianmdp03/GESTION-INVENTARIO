@@ -11,7 +11,8 @@ public class DescuentoValidator {
     @Autowired
     private DescuentoRepository descuentoRepository;
 
-    public void verificarListaVacia(List<Descuento> lista){
+    public void verificarListaVacia(List<Descuento> lista)
+    {
         if(lista.isEmpty()){
             throw new NotFoundException("No se encontraron descuentos");
         }
