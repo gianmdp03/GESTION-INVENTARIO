@@ -57,10 +57,18 @@ public class ProductoService {
         if (descuento != null) {
             descuento.getProductos().remove(producto);
         }
-
         productoRepository.delete(producto);
     }
-
+    public List<ProductoListDTO> buscarPorProveedor(String email)
+    {
+        return productoRepository.findAllByProveedorEmail(email).stream().map(existencia ->
+                new ProductoListDTO(existencia.getId(), existencia.getNombre(), existencia.getCategoria(), existencia.getPrecioUnitario())).toList();
+    }
+    public List<ProductoListDTO> buscarPorCategoria(String categoria)
+    {
+        return productoRepository.findAllByCategoria(categoria).stream().map(existencia ->
+                new ProductoListDTO(existencia.getId(), existencia.getNombre(), existencia.getCategoria(), existencia.getPrecioUnitario())).toList();
+    }
     public ProductoDetailDTO visualizarProductoPorId(Long id){
         return productoRepository.findById(id).map(producto -> new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecioUnitario(),producto.getCodigoBarras())).orElseThrow();
     }
