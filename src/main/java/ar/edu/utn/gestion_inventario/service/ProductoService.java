@@ -31,7 +31,7 @@ public class ProductoService {
     public ProductoDetailDTO crearProducto(ProductoRequestDTO dto)
     {
         Descuento descuento = descuentoRepository.getReferenceById(dto.getIdDescuento());
-        Proveedor proveedor = proveedorRepository.getReferenceByEmail(dto.getEmailProveedor());
+        Proveedor proveedor = proveedorRepository.getReferenceByEmail(dto.getEmailProveedor()).orElseThrow(() -> new NotFoundException("El email ingresado no existe"));
         Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor, descuento));
         return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
     }

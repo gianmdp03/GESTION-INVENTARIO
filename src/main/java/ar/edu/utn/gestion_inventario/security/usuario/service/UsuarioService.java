@@ -1,6 +1,7 @@
 package ar.edu.utn.gestion_inventario.security.usuario.service;
 
 import ar.edu.utn.gestion_inventario.ENUM.TipoUsuario;
+import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioDetailDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.model.Usuario;
 import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
@@ -34,12 +35,17 @@ public class UsuarioService implements UserDetailsService {
         usuario = usuarioRepository.save(usuario);
         return new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario());
     }
-
     public List<UsuarioDetailDTO> listarUsuarios()
     {
         List<UsuarioDetailDTO> lista = usuarioRepository.findAll().stream().map(usuario -> new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario())).toList();
         comprobarListaVacia(lista);
         return lista;
+    }
+
+    public UsuarioDetailDTO mostrarUsuarioPorUsername(String username)
+    {
+        Usuario usuario = usuarioRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("El username ingresado no existe"));
+        return new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario());
     }
 
     @Transactional
