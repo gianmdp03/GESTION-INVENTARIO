@@ -50,6 +50,7 @@ public class ProductoService {
         return productoRepository.findAll().stream().map(producto -> new ProductoListDTO(producto.getId(), producto.getNombre(),
                 producto.getCategoria(), producto.getPrecioUnitario())).toList();
     }
+
     public void eliminarProducto(Long id) {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Producto no encontrado"));
@@ -58,7 +59,12 @@ public class ProductoService {
         if (descuento != null) {
             descuento.getProductos().remove(producto);
         }
-
         productoRepository.delete(producto);
+    }
+        
+    public List<ProductoListDTO> buscarPorProveedor(Proveedor proveedor)
+    {
+        return productoRepository.findAllByProveedor(proveedor).stream().map(existencia ->
+                new ProductoListDTO(existencia.getId(), existencia.getNombre(), existencia.getCategoria(), existencia.getPrecioUnitario())).toList();
     }
 }
