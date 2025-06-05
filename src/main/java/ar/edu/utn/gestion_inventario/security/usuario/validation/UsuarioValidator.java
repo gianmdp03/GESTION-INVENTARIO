@@ -19,6 +19,7 @@ public class UsuarioValidator {
             throw new ConflictException("El nombre de usuario ingresado ya existe");
         }
     }
+
     public void comprobarUsername(String username)
     {
         if(!(usuarioRepository.existsByUsername(username)))
@@ -26,6 +27,7 @@ public class UsuarioValidator {
             throw new NotFoundException("El nombre de usuario no existe");
         }
     }
+
     public void comprobarListaVacia(List<UsuarioDetailDTO> usuarios)
     {
         if(usuarios.isEmpty())

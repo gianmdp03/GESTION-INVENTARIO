@@ -23,6 +23,7 @@ import java.util.List;
 public class DescuentoService {
     @Autowired
     private DescuentoRepository descuentoRepository;
+
     @Autowired
     private ProductoRepository productoRepository;
 
@@ -43,6 +44,7 @@ public class DescuentoService {
         descuento = descuentoRepository.save(descuento);
         return new DescuentoDetailDTO(descuento.getId(), descuento.getDescripcion(), descuento.getPorcentaje(), descuento.getFechaInicio(), descuento.getFechaFin(), productos);
     }
+
     public DescuentoDetailDTO modificarDescuento(Long id, DescuentoRequestDTO dto)
     {
         return descuentoRepository.findById(id).map(descuento -> {
@@ -60,6 +62,7 @@ public class DescuentoService {
                     descuento.getFechaFin(), productosDTO);
         }).orElseThrow(() -> new NotFoundException("Descuento no encontrado"));
     }
+
     public List<DescuentoListDTO> listarDescuentos()
     {
         descuentoValidator.verificarListaVacia(descuentoRepository.findAll());

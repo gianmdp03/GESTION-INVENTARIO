@@ -18,31 +18,42 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @PostMapping("/admin")
+    public ResponseEntity<UsuarioDetailDTO> crearUsuarioSinAutorizacion(@Valid @RequestBody Usuario usuario)
+    {
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.crearUsuario(usuario));
+    }
+
     @PostMapping
     public ResponseEntity<UsuarioDetailDTO> crearUsuario(@Valid @RequestBody Usuario usuario)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.crearUsuario(usuario));
     }
+
     @PutMapping
     public ResponseEntity<UsuarioDetailDTO> modificarUsuario(@Valid @RequestBody UsuarioPutRequestDTO dto)
     {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.modificarUsername(dto.getUsernameActual(), dto.getUsernameNuevo()));
     }
+
     @PatchMapping("/{username}")
     public ResponseEntity<UsuarioDetailDTO> convertirEnAdministrador(@RequestBody String username)
     {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.convertirEnAdministrador(username));
     }
+
     @GetMapping
     public ResponseEntity<List<UsuarioDetailDTO>> listarUsuario()
     {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarUsuarios());
     }
+
     @GetMapping("/{username}")
     public ResponseEntity<UsuarioDetailDTO> mostrarUsuarioPorUsername(@PathVariable String username)
     {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.mostrarUsuarioPorUsername(username));
     }
+
     @DeleteMapping("/{username}")
     public ResponseEntity<Void> eliminarPorUsername(@PathVariable String username)
     {

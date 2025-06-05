@@ -39,6 +39,7 @@ public class UsuarioService implements UserDetailsService {
         usuario = usuarioRepository.save(usuario);
         return new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario());
     }
+
     @Transactional
     public UsuarioDetailDTO modificarUsername(String usernameActual, String usernameNuevo)
     {
@@ -49,12 +50,14 @@ public class UsuarioService implements UserDetailsService {
             return new UsuarioDetailDTO(user.getUsername(), user.getTipoUsuario());
         }).orElseThrow(() -> new NotFoundException("El nombre de usuario ingresado no corresponde a un usuario existente"));
     }
+
     public List<UsuarioDetailDTO> listarUsuarios()
     {
         List<UsuarioDetailDTO> lista = usuarioRepository.findAll().stream().map(usuario -> new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario())).toList();
         usuarioValidator.comprobarListaVacia(lista);
         return lista;
     }
+
     public UsuarioDetailDTO convertirEnAdministrador(String username)
     {
         return usuarioRepository.findByUsername(username).map(usuario -> {
@@ -63,6 +66,7 @@ public class UsuarioService implements UserDetailsService {
             return new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario());
         }).orElseThrow(() -> new NotFoundException("El nombre de usuario ingresado no corresponde a un usuario existente"));
     }
+
     public UsuarioDetailDTO mostrarUsuarioPorUsername(String username)
     {
         Usuario usuario = usuarioRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("El username ingresado no existe"));
