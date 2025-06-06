@@ -23,18 +23,17 @@ public class SecurityConfiguration {
         return httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth
                 //USUARIO
                 .requestMatchers(HttpMethod.POST, "/api/auth/admin").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/auth").hasRole("ADMINISTRADOR")
                 .requestMatchers(HttpMethod.PUT, "/api/auth").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
-                .requestMatchers(HttpMethod.PATCH, "/api/auth").hasRole("ADMINISTRADOR")
-                .requestMatchers(HttpMethod.GET, "/api/auth").hasRole("ADMINISTRADOR")
-                .requestMatchers(HttpMethod.GET, "/api/auth/*").hasRole("ADMINISTRADOR")
-                .requestMatchers(HttpMethod.DELETE, "/api/auth/*").hasRole("ADMINISTRADOR")
+                .requestMatchers( "/api/auth").hasRole("ADMINISTRADOR")
+                .requestMatchers("/api/auth/*").hasRole("ADMINISTRADOR")
                 //PROVEEDOR
                 .requestMatchers("/api/proveedor").hasRole("ADMINISTRADOR")
                 .requestMatchers("/api/proveedor/*").hasRole("ADMINISTRADOR")
                 .requestMatchers("/api/proveedor/email/*").hasRole("ADMINISTRADOR")
                 //DESCUENTO
-
+                .requestMatchers("/api/descuento").hasRole("ADMINISTRADOR")
+                .requestMatchers("/api/descuento/*").hasRole("ADMINISTRADOR")
+                .requestMatchers("/api/descuento/fecha").hasRole("ADMINISTRADOR")
                 //EXISTENCIA
                 .requestMatchers("/api/existencia").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 .requestMatchers("/api/existencia/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
