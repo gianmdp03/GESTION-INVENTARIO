@@ -16,6 +16,9 @@ public class ExistenciaRequestDTO {
     @NotNull
     private Long idProducto;
 
+    public ExistenciaRequestDTO() {
+    }
+
     public ExistenciaRequestDTO(int cantidad, LocalDate fechaEntrada, LocalDate fechaVencimiento, Long idProducto) {
         this.cantidad = cantidad;
         this.fechaEntrada = fechaEntrada;

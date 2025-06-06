@@ -14,6 +14,9 @@ public class ProveedorRequestDTO {
     @NotBlank
     private String direccion;
 
+    public ProveedorRequestDTO() {
+    }
+
     public ProveedorRequestDTO(String nombre, String telefono, String email, String direccion) {
         this.nombre = nombre;
         this.telefono = telefono;

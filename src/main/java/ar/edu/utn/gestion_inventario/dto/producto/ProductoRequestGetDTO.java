@@ -6,6 +6,9 @@ public class ProductoRequestGetDTO {
     @NotBlank
     private String codigoBarras;
 
+    public ProductoRequestGetDTO() {
+    }
+
     public ProductoRequestGetDTO(String codigoBarras) {
         this.codigoBarras = codigoBarras;
     }

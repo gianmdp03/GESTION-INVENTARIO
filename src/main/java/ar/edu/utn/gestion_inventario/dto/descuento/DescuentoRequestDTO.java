@@ -22,6 +22,9 @@ public class DescuentoRequestDTO {
 
     private List<Long> productos = new ArrayList<>();
 
+    public DescuentoRequestDTO() {
+    }
+
     public DescuentoRequestDTO(BigDecimal porcentaje, LocalDate fechaInicio, LocalDate fechaFin, List<Long> productos) {
         this.porcentaje = porcentaje;
         this.fechaInicio = fechaInicio;

@@ -9,6 +9,9 @@ public class UsuarioPutRequestDTO {
     @NotBlank
     private String usernameNuevo;
 
+    public UsuarioPutRequestDTO() {
+    }
+
     public UsuarioPutRequestDTO(String usernameActual, String usernameNuevo) {
         this.usernameActual = usernameActual;
         this.usernameNuevo = usernameNuevo;

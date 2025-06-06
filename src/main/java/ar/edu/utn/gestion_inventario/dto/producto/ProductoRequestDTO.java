@@ -21,6 +21,9 @@ public class ProductoRequestDTO {
     private String emailProveedor;
     private Long idDescuento;
 
+    public ProductoRequestDTO() {
+    }
+
     public ProductoRequestDTO(String nombre, String categoria, BigDecimal precioUnitario, String codigoBarras, String emailProveedor) {
         this.nombre = nombre;
         this.categoria = categoria;
