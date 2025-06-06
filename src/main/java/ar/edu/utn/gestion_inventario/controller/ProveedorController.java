@@ -49,8 +49,9 @@ public class ProveedorController {
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarProveedorPorId(@PathVariable Long id)
+    public ResponseEntity<Void> eliminarProveedorPorId(@PathVariable Long id)
     {
         proveedorService.eliminarProveedorPorId(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
