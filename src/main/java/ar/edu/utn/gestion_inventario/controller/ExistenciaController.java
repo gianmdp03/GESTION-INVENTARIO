@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/existencia")
+@RequestMapping("/api/existencia")
 public class ExistenciaController {
     @Autowired
     private ExistenciaService existenciaService;
@@ -25,7 +25,7 @@ public class ExistenciaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ExistenciaDetailDTO> modificarStock(@PathVariable Long id, int stock)
+    public ResponseEntity<ExistenciaDetailDTO> modificarStock(@PathVariable Long id, @PathVariable int stock)
     {
         return ResponseEntity.status(HttpStatus.OK).body(existenciaService.modificarStock(id, stock));
     }
@@ -36,5 +36,27 @@ public class ExistenciaController {
         return ResponseEntity.status(HttpStatus.OK).body(existenciaService.listarExistencia());
     }
 
+    @GetMapping("/stock/mas")
+    public ResponseEntity<List<ExistenciaListDTO>> listarExistenciasConMasCantidad()
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(existenciaService.listarExistenciasConMasCantidad());
+    }
 
+    @GetMapping("/stock/menos/{cantidad}")
+    public ResponseEntity<List<ExistenciaListDTO>> listarExistenciasConMenosCantidad(@PathVariable int cantidad)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(existenciaService.listarExistenciasConMenosCantidad(cantidad));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ExistenciaDetailDTO> visualizarExistenciaPorId(@PathVariable Long id)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(existenciaService.visualizarExistenciaPorId(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminarExistencia(@PathVariable Long id)
+    {
+        existenciaService.eliminarExistencia(id);
+    }
 }
