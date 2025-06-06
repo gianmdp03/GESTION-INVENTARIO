@@ -47,4 +47,10 @@ public class ExistenciaController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(existenciaService.listarExistenciasConMenosCantidad(cantidad));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ExistenciaDetailDTO> visualizarExistenciaPorId(@PathVariable Long id)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(existenciaService.visualizarExistenciaPorId(id));
+    }
 }
