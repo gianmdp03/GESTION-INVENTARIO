@@ -54,7 +54,12 @@ public class ExistenciaService {
                 existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getProducto().getNombre())).toList();
     }
 
-
+    public List<ExistenciaListDTO> listarExistenciasConMenosCantidad(int cantidad)
+    {
+        existenciaValidator.verificarListaVacia(existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad));
+        return existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad).stream().map(existencia ->
+                new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
+    }
 
     public ExistenciaDetailDTO visualizarExistenciaPorId(Long id)
     {
