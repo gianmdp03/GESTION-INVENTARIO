@@ -33,10 +33,19 @@ public class ProductoService {
     public ProductoDetailDTO crearProducto(ProductoRequestDTO dto)
     {
         verificarSiYAExisteCodigoDeBarras(dto.getCodigoBarras(), productoRepository);
-        Descuento descuento = Optional.of(descuentoRepository.getReferenceById(dto.getIdDescuento())).orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));
-        Proveedor proveedor = proveedorRepository.getReferenceByEmail(dto.getEmailProveedor()).orElseThrow(() -> new NotFoundException("El email ingresado no existe"));
-        Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor, descuento));
-        return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
+        if(dto.getIdDescuento() != null)
+        {
+            Descuento descuento = descuentoRepository.getReferenceById(dto.getIdDescuento());
+            Proveedor proveedor = proveedorRepository.findByEmail(dto.getEmailProveedor()).orElseThrow(() -> new NotFoundException("El email ingresado no existe"));
+            Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor, descuento));
+            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
+        }
+        else
+        {
+            Proveedor proveedor = proveedorRepository.findByEmail(dto.getEmailProveedor()).orElseThrow(() -> new NotFoundException("El email ingresado no existe"));
+            Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor));
+            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
+        }
     }
 
     public ProductoDetailDTO modificarPrecio(Long id, ProductoRequestDTO dto)

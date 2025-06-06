@@ -23,7 +23,7 @@ public class ProveedorService {
     {
         verificarSiYAExisteEmail(dto.getEmail(), proveedorRepository);
         Proveedor proveedor = proveedorRepository.save(new Proveedor(dto.getNombre(), dto.getTelefono(), dto.getEmail(), dto.getDireccion()));
-        return new ProveedorDetailDTO(proveedor.getId(), proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail(), proveedor.getEmail());
+        return new ProveedorDetailDTO(proveedor.getId(), proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail(), proveedor.getDireccion());
     }
 
     public ProveedorDetailDTO modificarProveedor(Long id, ProveedorRequestDTO dto)

@@ -19,6 +19,7 @@ public class ProductoRequestDTO {
     @Email
     @NotBlank
     private String emailProveedor;
+
     private Long idDescuento;
 
     public ProductoRequestDTO() {
