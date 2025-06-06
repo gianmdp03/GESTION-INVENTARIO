@@ -1,6 +1,7 @@
 package ar.edu.utn.gestion_inventario.controller;
 
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoDetailDTO;
+import ar.edu.utn.gestion_inventario.dto.producto.ProductoListDTO;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoRequestDTO;
 import ar.edu.utn.gestion_inventario.service.ProductoService;
 import jakarta.validation.Valid;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/producto")
@@ -26,4 +29,12 @@ public class ProductoController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarPrecio(id, dto));
     }
+
+    @GetMapping
+    public ResponseEntity<List<ProductoListDTO>> listarProductos()
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(productoService.listarProductos());
+    }
+
+    
 }
