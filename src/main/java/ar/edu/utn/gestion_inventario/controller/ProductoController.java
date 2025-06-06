@@ -53,4 +53,10 @@ public class ProductoController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.buscarPorCategoria(categoria));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductoDetailDTO> visualizarProductoPorId(@PathVariable Long id)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(productoService.visualizarProductoPorId(id));
+    }
 }
