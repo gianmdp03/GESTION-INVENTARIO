@@ -47,4 +47,10 @@ public class ProductoController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.buscarPorProveedor(email));
     }
+
+    @GetMapping("/categoria/{categoria}")
+    public ResponseEntity<List<ProductoListDTO>> buscarPorCategoria(@PathVariable String categoria)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(productoService.buscarPorCategoria(categoria));
+    }
 }
