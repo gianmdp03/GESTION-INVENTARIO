@@ -34,4 +34,10 @@ public class DescuentoController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(descuentoService.listarDescuentos());
     }
+
+    @GetMapping("/fecha")
+    public ResponseEntity<List<DescuentoListDTO>> filtrarPorFechaInicioASC()
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(descuentoService.filtrarPorFechaInicioASC());
+    }
 }

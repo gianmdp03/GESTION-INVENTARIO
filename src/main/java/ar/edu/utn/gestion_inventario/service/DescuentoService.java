@@ -69,6 +69,20 @@ public class DescuentoService {
         return descuentoRepository.findAll().stream().map(descuento ->
                 new DescuentoListDTO(descuento.getId(), descuento.getPorcentaje(), descuento.getFechaInicio(), descuento.getFechaFin())).toList();
     }
+
+    public List<DescuentoListDTO> filtrarPorFechaInicioASC(){
+        descuentoValidator.verificarListaVacia(descuentoRepository.findAll());
+        return descuentoRepository.findAllByOrderByFechaInicioAsc().stream().map(descuento -> new DescuentoListDTO(descuento.getId(),descuento.getPorcentaje(),descuento.getFechaInicio(),descuento.getFechaFin())).toList();
+    }
+
+    public DescuentoDetailDTO visualizarDescuentoPorId(Long id){
+        List<ProductoShortListDTO> lista;
+        Descuento descuento = descuentoRepository.getReferenceById(id);
+        lista = descuento.getProductos().stream().map(producto->new ProductoShortListDTO(producto.getId(),producto.getNombre())).toList();
+        return descuentoRepository.findById(id).map(desc -> new DescuentoDetailDTO(desc.getId(),desc.getDescripcion(),desc.getPorcentaje(),desc.getFechaInicio(),desc.getFechaFin(),lista)).orElseThrow(
+                ()->new NotFoundException("El id ingresado no existe"));
+    }
+
     @Transactional
     public void eliminarDescuentosExpirados()
     {
@@ -85,16 +99,5 @@ public class DescuentoService {
 
         productoRepository.saveAll(productosActualizados);
         descuentoRepository.deleteAll(expirados);
-    }
-    public DescuentoDetailDTO visualizarDescuentoPorId(Long id){
-        List<ProductoShortListDTO> lista;
-        Descuento descuento = descuentoRepository.getReferenceById(id);
-        lista = descuento.getProductos().stream().map(producto->new ProductoShortListDTO(producto.getId(),producto.getNombre())).toList();
-        return descuentoRepository.findById(id).map(desc -> new DescuentoDetailDTO(desc.getId(),desc.getDescripcion(),desc.getPorcentaje(),desc.getFechaInicio(),desc.getFechaFin(),lista)).orElseThrow(
-                ()->new NotFoundException("El id ingresado no existe"));
-    }
-    public List<DescuentoListDTO> filtrarPorFechaInicioASC(){
-        descuentoValidator.verificarListaVacia(descuentoRepository.findAll());
-        return descuentoRepository.findAllByOrderByFechaInicioAsc().stream().map(descuento -> new DescuentoListDTO(descuento.getId(),descuento.getPorcentaje(),descuento.getFechaInicio(),descuento.getFechaFin())).toList();
     }
 }
