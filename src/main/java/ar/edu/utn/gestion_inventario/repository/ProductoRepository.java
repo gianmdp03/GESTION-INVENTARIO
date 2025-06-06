@@ -1,7 +1,6 @@
 package ar.edu.utn.gestion_inventario.repository;
 
 import ar.edu.utn.gestion_inventario.model.Producto;
-import ar.edu.utn.gestion_inventario.model.Proveedor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
