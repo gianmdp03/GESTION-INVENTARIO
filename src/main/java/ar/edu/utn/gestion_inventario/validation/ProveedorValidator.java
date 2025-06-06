@@ -3,21 +3,18 @@ package ar.edu.utn.gestion_inventario.validation;
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.model.Proveedor;
 import ar.edu.utn.gestion_inventario.repository.ProveedorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class ProveedorValidator {
-    @Autowired
-    private ProveedorRepository proveedorRepository;
 
-    public void verificarSiExisteID(Long id){
+    public static void verificarSiExisteID(Long id, ProveedorRepository proveedorRepository){
         if(!(proveedorRepository.existsById(id))){
             throw  new NotFoundException("El id no existe");
         }
     }
 
-    public void comprobarListaVacia(List<Proveedor> lista)
+    public static void comprobarListaVacia(List<Proveedor> lista)
     {
         if(lista.isEmpty())
         {
@@ -25,7 +22,7 @@ public class ProveedorValidator {
         }
     }
 
-    public void verificarSiYAExisteEmail(String email){
+    public static void verificarSiYAExisteEmail(String email, ProveedorRepository proveedorRepository){
         if(proveedorRepository.existsByEmail(email)){
             throw  new NotFoundException("El email ya existe");
         }

@@ -17,7 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+import static ar.edu.utn.gestion_inventario.validation.DescuentoValidator.*;
 @Service
 @Validated
 public class DescuentoService {
@@ -26,8 +26,6 @@ public class DescuentoService {
 
     @Autowired
     private ProductoRepository productoRepository;
-
-    private DescuentoValidator descuentoValidator;
 
     public DescuentoDetailDTO crearDescuento(DescuentoRequestDTO dto)
     {
@@ -64,13 +62,13 @@ public class DescuentoService {
 
     public List<DescuentoListDTO> listarDescuentos()
     {
-        descuentoValidator.verificarListaVacia(descuentoRepository.findAll());
+        verificarListaVacia(descuentoRepository.findAll());
         return descuentoRepository.findAll().stream().map(descuento ->
                 new DescuentoListDTO(descuento.getId(), descuento.getPorcentaje(), descuento.getFechaInicio(), descuento.getFechaFin())).toList();
     }
 
     public List<DescuentoListDTO> filtrarPorFechaInicioASC(){
-        descuentoValidator.verificarListaVacia(descuentoRepository.findAll());
+        verificarListaVacia(descuentoRepository.findAll());
         return descuentoRepository.findAllByOrderByFechaInicioAsc().stream().map(descuento -> new DescuentoListDTO(descuento.getId(),descuento.getPorcentaje(),descuento.getFechaInicio(),descuento.getFechaFin())).toList();
     }
 

@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 public class UsuarioValidator {
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
-    public void comprobarSiExisteUsername(String username)
+    public static void comprobarSiExisteUsername(String username, UsuarioRepository usuarioRepository)
     {
         if(usuarioRepository.existsByUsername(username))
         {
@@ -20,7 +18,7 @@ public class UsuarioValidator {
         }
     }
 
-    public void comprobarUsername(String username)
+    public static void comprobarUsername(String username, UsuarioRepository usuarioRepository)
     {
         if(!(usuarioRepository.existsByUsername(username)))
         {
@@ -28,7 +26,7 @@ public class UsuarioValidator {
         }
     }
 
-    public void comprobarListaVacia(List<UsuarioDetailDTO> usuarios)
+    public static void comprobarListaVacia(List<UsuarioDetailDTO> usuarios)
     {
         if(usuarios.isEmpty())
         {

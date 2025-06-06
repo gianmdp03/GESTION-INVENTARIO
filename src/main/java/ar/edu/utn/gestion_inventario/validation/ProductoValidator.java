@@ -3,15 +3,12 @@ package ar.edu.utn.gestion_inventario.validation;
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class ProductoValidator {
-    @Autowired
-    private ProductoRepository productoRepository;
 
-    public void comprobarListaVacia(List<Producto> lista)
+    public static void comprobarListaVacia(List<Producto> lista)
     {
         if(lista.isEmpty())
         {
@@ -19,7 +16,7 @@ public class ProductoValidator {
         }
     }
 
-    public void verificarSiYAExisteCodigoDeBarras(String codigoBarras){
+    public static void verificarSiYAExisteCodigoDeBarras(String codigoBarras, ProductoRepository productoRepository){
         if((productoRepository.existsByCodigoBarras(codigoBarras))){
             throw new NotFoundException("El codigo de barras no existe");
         }

@@ -10,7 +10,6 @@ import ar.edu.utn.gestion_inventario.model.Proveedor;
 import ar.edu.utn.gestion_inventario.repository.DescuentoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProveedorRepository;
-import ar.edu.utn.gestion_inventario.validation.ProductoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
-
+import static ar.edu.utn.gestion_inventario.validation.ProductoValidator.*;
 @Service
 @Validated
 public class ProductoService {
@@ -31,11 +30,9 @@ public class ProductoService {
     @Autowired
     private ProveedorRepository proveedorRepository;
 
-    private ProductoValidator productoValidator;
-
     public ProductoDetailDTO crearProducto(ProductoRequestDTO dto)
     {
-        productoValidator.verificarSiYAExisteCodigoDeBarras(dto.getCodigoBarras());
+        verificarSiYAExisteCodigoDeBarras(dto.getCodigoBarras(), productoRepository);
         Descuento descuento = Optional.of(descuentoRepository.getReferenceById(dto.getIdDescuento())).orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));
         Proveedor proveedor = proveedorRepository.getReferenceByEmail(dto.getEmailProveedor()).orElseThrow(() -> new NotFoundException("El email ingresado no existe"));
         Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor, descuento));
@@ -55,7 +52,7 @@ public class ProductoService {
     public List<ProductoListDTO> listarProductos()
     {
         List<Producto> lista = productoRepository.findAll();
-        productoValidator.comprobarListaVacia(lista);
+        comprobarListaVacia(lista);
         return lista.stream().map(producto -> new ProductoListDTO(producto.getId(), producto.getNombre(),
             producto.getCategoria(), producto.getPrecioUnitario())).toList();
     }
@@ -74,7 +71,7 @@ public class ProductoService {
     public List<ProductoListDTO> buscarPorProveedor(String email)
     {
         List<Producto> lista = productoRepository.findAllByProveedorEmail(email);
-        productoValidator.comprobarListaVacia(lista);
+        comprobarListaVacia(lista);
         return lista.stream().map(producto ->
                 new ProductoListDTO(producto.getId(), producto.getNombre(), producto.getCategoria(), producto.getPrecioUnitario())).toList();
     }
@@ -82,7 +79,7 @@ public class ProductoService {
     public List<ProductoListDTO> buscarPorCategoria(String categoria)
     {
         List<Producto> lista = productoRepository.findAllByCategoria(categoria);
-        productoValidator.comprobarListaVacia(lista);
+        comprobarListaVacia(lista);
         return lista.stream().map(producto ->
                 new ProductoListDTO(producto.getId(), producto.getNombre(), producto.getCategoria(), producto.getPrecioUnitario())).toList();
     }

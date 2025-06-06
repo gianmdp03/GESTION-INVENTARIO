@@ -12,18 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-
+import static ar.edu.utn.gestion_inventario.validation.ProveedorValidator.*;
 @Service
 @Validated
 public class ProveedorService {
     @Autowired
     private ProveedorRepository proveedorRepository;
 
-    private ProveedorValidator proveedorValidator;
-
     public ProveedorDetailDTO crearProveedor(ProveedorRequestDTO dto)
     {
-        proveedorValidator.verificarSiYAExisteEmail(dto.getEmail());
+        verificarSiYAExisteEmail(dto.getEmail(), proveedorRepository);
         Proveedor proveedor = proveedorRepository.save(new Proveedor(dto.getNombre(), dto.getTelefono(), dto.getEmail(), dto.getDireccion()));
         return new ProveedorDetailDTO(proveedor.getId(), proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail(), proveedor.getEmail());
     }
@@ -43,7 +41,7 @@ public class ProveedorService {
     public List<ProveedorListDTO> listarProveedores()
     {
         List<Proveedor> lista = proveedorRepository.findAll();
-        proveedorValidator.comprobarListaVacia(lista);
+        comprobarListaVacia(lista);
         List<ProveedorListDTO> dto = lista.stream().map(proveedor -> new ProveedorListDTO(proveedor.getId(),
                 proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail())).toList();
         return dto;
@@ -60,7 +58,7 @@ public class ProveedorService {
     }
 
     public void eliminarProveedorPorId(Long id){
-        proveedorValidator.verificarSiExisteID(id);
+        verificarSiExisteID(id, proveedorRepository);
         proveedorRepository.deleteById(id);
     }
 }

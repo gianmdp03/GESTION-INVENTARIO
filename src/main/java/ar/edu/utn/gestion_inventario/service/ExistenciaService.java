@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import java.util.List;
-
+import static ar.edu.utn.gestion_inventario.validation.ExistenciaValidator.*;
 @Service
 @Validated
 public class ExistenciaService {
@@ -21,8 +21,6 @@ public class ExistenciaService {
     private ExistenciaRepository existenciaRepository;
     @Autowired
     private ProductoRepository productoRepository;
-
-    private ExistenciaValidator existenciaValidator;
 
     public ExistenciaDetailDTO crearExistencia(ExistenciaRequestDTO dto)
     {
@@ -42,21 +40,21 @@ public class ExistenciaService {
 
     public List<ExistenciaListDTO> listarExistencia()
     {
-        existenciaValidator.verificarListaVacia(existenciaRepository.findAll());
+        verificarListaVacia(existenciaRepository.findAll());
         return existenciaRepository.findAll().stream().map(existencia ->
                 new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
     }
 
     public List<ExistenciaListDTO> listarExistenciasConMasCantidad()
     {
-        existenciaValidator.verificarListaVacia(existenciaRepository.findAllByOrderByCantidadDesc());
+        verificarListaVacia(existenciaRepository.findAllByOrderByCantidadDesc());
         return existenciaRepository.findAllByOrderByCantidadDesc().stream().map(existencia -> new ExistenciaListDTO(existencia.getId(),
                 existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getProducto().getNombre())).toList();
     }
 
     public List<ExistenciaListDTO> listarExistenciasConMenosCantidad(int cantidad)
     {
-        existenciaValidator.verificarListaVacia(existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad));
+        verificarListaVacia(existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad));
         return existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad).stream().map(existencia ->
                 new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
     }
@@ -68,7 +66,7 @@ public class ExistenciaService {
 
     public void eliminarExistencia(Long id)
     {
-        existenciaValidator.verificarSiExisteID(id);
+        verificarSiExisteID(id, existenciaRepository);
         existenciaRepository.deleteById(id);
     }
 }

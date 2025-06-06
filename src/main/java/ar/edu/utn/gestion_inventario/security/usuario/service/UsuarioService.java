@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static ar.edu.utn.gestion_inventario.security.usuario.validation.UsuarioValidator.*;
+
 @Service
 public class UsuarioService implements UserDetailsService {
 
@@ -25,11 +27,9 @@ public class UsuarioService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private UsuarioValidator usuarioValidator;
-
     public UsuarioDetailDTO crearUsuario(Usuario usuario)
     {
-        usuarioValidator.comprobarSiExisteUsername(usuario.getUsername());
+        comprobarSiExisteUsername(usuario.getUsername(), usuarioRepository);
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         if(usuario.getTipoUsuario()==null)
         {
@@ -42,7 +42,7 @@ public class UsuarioService implements UserDetailsService {
     @Transactional
     public UsuarioDetailDTO modificarUsername(String usernameActual, String usernameNuevo)
     {
-        usuarioValidator.comprobarSiExisteUsername(usernameNuevo);
+        comprobarSiExisteUsername(usernameNuevo, usuarioRepository);
         return usuarioRepository.findByUsername(usernameActual).map(user -> {
             user.setUsername(usernameNuevo);
             user = usuarioRepository.save(user);
@@ -53,7 +53,7 @@ public class UsuarioService implements UserDetailsService {
     public List<UsuarioDetailDTO> listarUsuarios()
     {
         List<UsuarioDetailDTO> lista = usuarioRepository.findAll().stream().map(usuario -> new UsuarioDetailDTO(usuario.getUsername(), usuario.getTipoUsuario())).toList();
-        usuarioValidator.comprobarListaVacia(lista);
+        comprobarListaVacia(lista);
         return lista;
     }
 
@@ -75,7 +75,7 @@ public class UsuarioService implements UserDetailsService {
     @Transactional
     public void eliminarUsuarioPorUsername(String username)
     {
-        usuarioValidator.comprobarUsername(username);
+        comprobarUsername(username, usuarioRepository);
         usuarioRepository.deleteByUsername(username);
     }
 
