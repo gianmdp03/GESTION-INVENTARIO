@@ -20,4 +20,10 @@ public class ProductoController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.crearProducto(dto));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductoDetailDTO> modificarProducto(@PathVariable Long id, @Valid @RequestBody ProductoRequestDTO dto)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarPrecio(id, dto));
+    }
 }
