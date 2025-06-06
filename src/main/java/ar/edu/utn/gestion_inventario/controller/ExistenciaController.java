@@ -53,4 +53,10 @@ public class ExistenciaController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(existenciaService.visualizarExistenciaPorId(id));
     }
+
+    @DeleteMapping("/{id}")
+    public void eliminarExistencia(@PathVariable Long id)
+    {
+        existenciaService.eliminarExistencia(id);
+    }
 }
