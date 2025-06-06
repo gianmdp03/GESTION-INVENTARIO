@@ -34,12 +34,18 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/descuento").hasRole("ADMINISTRADOR")
                 .requestMatchers("/api/descuento/*").hasRole("ADMINISTRADOR")
                 .requestMatchers("/api/descuento/fecha").hasRole("ADMINISTRADOR")
+                .requestMatchers("/api/descuento/expirados").hasRole("ADMINISTRADOR")
                 //EXISTENCIA
                 .requestMatchers("/api/existencia").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 .requestMatchers("/api/existencia/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 .requestMatchers("/api/existencia/stock/mas").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 .requestMatchers("/api/existencia/stock/menos/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 //PRODUCTO
+                .requestMatchers("/api/producto").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers("/api/producto/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers("/api/producto/email/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers("/api/producto/categoria/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers("/api/producto/codigobarras").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 .anyRequest().authenticated()
         ).userDetailsService(usuarioService).httpBasic(Customizer.withDefaults()).sessionManagement(
                 session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
