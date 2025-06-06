@@ -3,6 +3,7 @@ package ar.edu.utn.gestion_inventario.service;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoDetailDTO;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoListDTO;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoRequestDTO;
+import ar.edu.utn.gestion_inventario.dto.producto.ProductoRequestPutDTO;
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.model.Descuento;
 import ar.edu.utn.gestion_inventario.model.Producto;
@@ -48,7 +49,7 @@ public class ProductoService {
         }
     }
 
-    public ProductoDetailDTO modificarPrecio(Long id, ProductoRequestDTO dto)
+    public ProductoDetailDTO modificarPrecio(Long id, ProductoRequestPutDTO dto)
     {
         return productoRepository.findById(id).map(producto -> {
             producto.setPrecioUnitario(dto.getPrecioUnitario());
