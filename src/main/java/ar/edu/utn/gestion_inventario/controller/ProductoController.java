@@ -66,4 +66,11 @@ public class ProductoController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.visualizarProductoPorCodigoDeBarras(dto.getCodigoBarras()));
     }
+
+    @DeleteMapping("/codigobarras")
+    public ResponseEntity<Void> eliminarProductoPorCodigoDeBarras(@Valid @RequestBody ProductoRequestGetDTO dto)
+    {
+        productoService.eliminarProductoPorCodigoDeBarras(dto.getCodigoBarras());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
