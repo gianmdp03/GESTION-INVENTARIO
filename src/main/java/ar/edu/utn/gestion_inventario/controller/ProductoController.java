@@ -41,4 +41,10 @@ public class ProductoController {
     {
         productoService.eliminarProducto(id);
     }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<List<ProductoListDTO>> buscarPorProveedor(@PathVariable String email)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(productoService.buscarPorProveedor(email));
+    }
 }
