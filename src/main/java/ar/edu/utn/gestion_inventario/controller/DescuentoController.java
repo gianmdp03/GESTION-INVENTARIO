@@ -40,4 +40,10 @@ public class DescuentoController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(descuentoService.filtrarPorFechaInicioASC());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DescuentoDetailDTO> visualizarDescuentoPorId(@PathVariable Long id)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(descuentoService.visualizarDescuentoPorId(id));
+    }
 }
