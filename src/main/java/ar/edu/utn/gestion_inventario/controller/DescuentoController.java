@@ -47,9 +47,10 @@ public class DescuentoController {
         return ResponseEntity.status(HttpStatus.OK).body(descuentoService.visualizarDescuentoPorId(id));
     }
 
-    @DeleteMapping
-    public void eliminarDescuentosExpirados()
+    @DeleteMapping("/expirados")
+    public ResponseEntity<Void> eliminarDescuentosExpirados()
     {
         descuentoService.eliminarDescuentosExpirados();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
