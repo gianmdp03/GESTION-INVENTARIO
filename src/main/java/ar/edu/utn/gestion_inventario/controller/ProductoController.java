@@ -36,5 +36,9 @@ public class ProductoController {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.listarProductos());
     }
 
-    
+    @DeleteMapping("/{id}")
+    public void eliminarProductoPorId(@PathVariable Long id)
+    {
+        productoService.eliminarProducto(id);
+    }
 }
