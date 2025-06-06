@@ -29,7 +29,18 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.GET, "/api/auth").hasRole("ADMINISTRADOR")
                 .requestMatchers(HttpMethod.GET, "/api/auth/*").hasRole("ADMINISTRADOR")
                 .requestMatchers(HttpMethod.DELETE, "/api/auth/*").hasRole("ADMINISTRADOR")
-                //
+                //PROVEEDOR
+                .requestMatchers("/api/proveedor").hasRole("ADMINISTRADOR")
+                .requestMatchers("/api/proveedor/*").hasRole("ADMINISTRADOR")
+                .requestMatchers("/api/proveedor/email/*").hasRole("ADMINISTRADOR")
+                //DESCUENTO
+
+                //EXISTENCIA
+                .requestMatchers("/api/existencia").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers("/api/existencia/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers("/api/existencia/stock/mas").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers("/api/existencia/stock/menos/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                //PRODUCTO
                 .anyRequest().authenticated()
         ).userDetailsService(usuarioService).httpBasic(Customizer.withDefaults()).sessionManagement(
                 session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
