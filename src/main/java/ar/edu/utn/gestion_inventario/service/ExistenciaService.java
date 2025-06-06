@@ -21,7 +21,7 @@ public class ExistenciaService {
     private ExistenciaRepository existenciaRepository;
     @Autowired
     private ProductoRepository productoRepository;
-    @Autowired
+
     private ExistenciaValidator existenciaValidator;
 
     public ExistenciaDetailDTO crearExistencia(ExistenciaRequestDTO dto)

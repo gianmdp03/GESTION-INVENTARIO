@@ -31,7 +31,6 @@ public class ProductoService {
     @Autowired
     private ProveedorRepository proveedorRepository;
 
-    @Autowired
     private ProductoValidator productoValidator;
 
     public ProductoDetailDTO crearProducto(ProductoRequestDTO dto)

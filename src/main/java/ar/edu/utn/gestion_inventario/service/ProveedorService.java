@@ -18,8 +18,7 @@ import java.util.List;
 public class ProveedorService {
     @Autowired
     private ProveedorRepository proveedorRepository;
-
-    @Autowired
+    
     private ProveedorValidator proveedorValidator;
 
     public ProveedorDetailDTO crearProveedor(ProveedorRequestDTO dto)

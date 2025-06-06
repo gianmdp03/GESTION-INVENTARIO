@@ -27,7 +27,6 @@ public class DescuentoService {
     @Autowired
     private ProductoRepository productoRepository;
 
-    @Autowired
     private DescuentoValidator descuentoValidator;
 
     public DescuentoDetailDTO crearDescuento(DescuentoRequestDTO dto)
