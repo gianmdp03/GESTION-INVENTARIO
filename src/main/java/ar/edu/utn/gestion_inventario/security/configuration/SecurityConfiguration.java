@@ -36,7 +36,10 @@ public class SecurityConfiguration {
                 //DESCUENTO
 
                 //EXISTENCIA
-
+                .requestMatchers("/api/existencia").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers("/api/existencia/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers("/api/existencia/stock/mas").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers("/api/existencia/stock/menos/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 //PRODUCTO
                 .anyRequest().authenticated()
         ).userDetailsService(usuarioService).httpBasic(Customizer.withDefaults()).sessionManagement(
