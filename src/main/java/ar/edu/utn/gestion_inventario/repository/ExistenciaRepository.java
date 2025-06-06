@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ExistenciaRepository extends JpaRepository<Existencia, Long> {
     List<Existencia> findAllByCantidadLessThanOrderByCantidadAsc(int cantidad);
-    List<Existencia> findAllByOrderByCantidadDesc();
+    List<Existencia> findAllByCantidadGreaterThanOrderByCantidadDesc(int cantidad);
 }

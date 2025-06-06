@@ -45,10 +45,10 @@ public class ExistenciaService {
                 new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
     }
 
-    public List<ExistenciaListDTO> listarExistenciasConMasCantidad()
+    public List<ExistenciaListDTO> listarExistenciasConMasCantidad(int cantidad)
     {
-        verificarListaVacia(existenciaRepository.findAllByOrderByCantidadDesc());
-        return existenciaRepository.findAllByOrderByCantidadDesc().stream().map(existencia -> new ExistenciaListDTO(existencia.getId(),
+        verificarListaVacia(existenciaRepository.findAllByCantidadGreaterThanOrderByCantidadDesc(cantidad));
+        return existenciaRepository.findAllByCantidadGreaterThanOrderByCantidadDesc(cantidad).stream().map(existencia -> new ExistenciaListDTO(existencia.getId(),
                 existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getProducto().getNombre())).toList();
     }
 

@@ -36,10 +36,10 @@ public class ExistenciaController {
         return ResponseEntity.status(HttpStatus.OK).body(existenciaService.listarExistencia());
     }
 
-    @GetMapping("/stock/mas")
-    public ResponseEntity<List<ExistenciaListDTO>> listarExistenciasConMasCantidad()
+    @GetMapping("/stock/mas/{cantidad}")
+    public ResponseEntity<List<ExistenciaListDTO>> listarExistenciasConMasCantidad(@PathVariable int cantidad)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(existenciaService.listarExistenciasConMasCantidad());
+        return ResponseEntity.status(HttpStatus.OK).body(existenciaService.listarExistenciasConMasCantidad(cantidad));
     }
 
     @GetMapping("/stock/menos/{cantidad}")
