@@ -22,6 +22,7 @@ public class UsuarioService implements UserDetailsService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     private UsuarioValidator usuarioValidator;
