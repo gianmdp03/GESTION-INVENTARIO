@@ -3,6 +3,7 @@ package ar.edu.utn.gestion_inventario.controller;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoDetailDTO;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoListDTO;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoRequestDTO;
+import ar.edu.utn.gestion_inventario.dto.producto.ProductoRequestGetDTO;
 import ar.edu.utn.gestion_inventario.service.ProductoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,11 @@ public class ProductoController {
     public ResponseEntity<ProductoDetailDTO> visualizarProductoPorId(@PathVariable Long id)
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.visualizarProductoPorId(id));
+    }
+
+    @GetMapping("/codigobarras")
+    public ResponseEntity<ProductoDetailDTO> visualizarProductoPorCodigoDeBarras(@Valid @RequestBody ProductoRequestGetDTO dto)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(productoService.visualizarProductoPorCodigoDeBarras(dto.getCodigoBarras()));
     }
 }
