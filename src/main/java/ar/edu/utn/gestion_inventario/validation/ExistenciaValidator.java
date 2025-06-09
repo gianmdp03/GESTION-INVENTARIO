@@ -11,7 +11,7 @@ public class ExistenciaValidator {
     public static void verificarListaVacia(List<Existencia> lista)
     {
         if(lista.isEmpty()){
-            throw new NotFoundException("No se encontraron descuentos");
+            throw new NotFoundException("No se encontraron existencias");
         }
     }
     public static void verificarSiExisteID(Long id, ExistenciaRepository existenciaRepository)
