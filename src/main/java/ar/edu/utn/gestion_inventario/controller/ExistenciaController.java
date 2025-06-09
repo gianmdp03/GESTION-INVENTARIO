@@ -3,6 +3,7 @@ package ar.edu.utn.gestion_inventario.controller;
 import ar.edu.utn.gestion_inventario.dto.existencia.ExistenciaDetailDTO;
 import ar.edu.utn.gestion_inventario.dto.existencia.ExistenciaListDTO;
 import ar.edu.utn.gestion_inventario.dto.existencia.ExistenciaRequestDTO;
+import ar.edu.utn.gestion_inventario.dto.existencia.ExistenciaRequestPutDTO;
 import ar.edu.utn.gestion_inventario.service.ExistenciaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,9 @@ public class ExistenciaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ExistenciaDetailDTO> modificarStock(@PathVariable Long id, @PathVariable int stock)
+    public ResponseEntity<ExistenciaDetailDTO> modificarStock(@PathVariable Long id, @Valid @RequestBody ExistenciaRequestPutDTO dto)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(existenciaService.modificarStock(id, stock));
+        return ResponseEntity.status(HttpStatus.OK).body(existenciaService.modificarStock(id, dto.getCantidad()));
     }
 
     @GetMapping
