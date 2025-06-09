@@ -23,9 +23,9 @@ public class ProductoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductoDetailDTO> modificarProducto(@PathVariable Long id, @Valid @RequestBody ProductoRequestPutDTO dto)
+    public ResponseEntity<ProductoDetailDTO> modificarPrecioPorId(@PathVariable Long id, @Valid @RequestBody ProductoRequestPutDTO dto)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarPrecio(id, dto));
+        return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarPrecioPorID(id, dto));
     }
 
     @GetMapping

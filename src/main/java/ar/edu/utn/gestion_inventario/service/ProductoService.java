@@ -47,8 +47,7 @@ public class ProductoService {
             return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
         }
     }
-
-    public ProductoDetailDTO modificarPrecio(Long id, ProductoRequestPutDTO dto)
+    public ProductoDetailDTO modificarPrecioPorID(Long id, ProductoRequestPutDTO dto)
     {
         return productoRepository.findById(id).map(producto -> {
             producto.setPrecioUnitario(dto.getPrecioUnitario());
