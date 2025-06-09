@@ -72,16 +72,16 @@ public class ProductoController {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.visualizarProductoPorId(id));
     }
 
-    @GetMapping("/codigobarras")
-    public ResponseEntity<ProductoDetailDTO> visualizarProductoPorCodigoDeBarras(@Valid @RequestBody ProductoRequestGetDTO dto)
+    @GetMapping("/codigobarras/{codigobarras}")
+    public ResponseEntity<ProductoDetailDTO> visualizarProductoPorCodigoDeBarras(@PathVariable String codigoBarras)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(productoService.visualizarProductoPorCodigoDeBarras(dto.getCodigoBarras()));
+        return ResponseEntity.status(HttpStatus.OK).body(productoService.visualizarProductoPorCodigoDeBarras(codigoBarras));
     }
 
-    @DeleteMapping("/codigobarras")
-    public ResponseEntity<Void> eliminarProductoPorCodigoDeBarras(@Valid @RequestBody ProductoRequestGetDTO dto)
+    @DeleteMapping("/codigobarras/{codigobarras}")
+    public ResponseEntity<Void> eliminarProductoPorCodigoDeBarras(@PathVariable String codigoBarras)
     {
-        productoService.eliminarProductoPorCodigoDeBarras(dto.getCodigoBarras());
+        productoService.eliminarProductoPorCodigoDeBarras(codigoBarras);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
