@@ -34,16 +34,15 @@ public class ProductoService {
     public ProductoDetailDTO crearProducto(ProductoRequestDTO dto)
     {
         verificarSiYAExisteCodigoDeBarras(dto.getCodigoBarras(), productoRepository);
+        Proveedor proveedor = proveedorRepository.findByEmail(dto.getEmailProveedor()).orElseThrow(() -> new NotFoundException("El email ingresado no existe"));
         if(dto.getIdDescuento() != null)
         {
             Descuento descuento = descuentoRepository.getReferenceById(dto.getIdDescuento());
-            Proveedor proveedor = proveedorRepository.findByEmail(dto.getEmailProveedor()).orElseThrow(() -> new NotFoundException("El email ingresado no existe"));
             Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor, descuento));
             return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
         }
         else
         {
-            Proveedor proveedor = proveedorRepository.findByEmail(dto.getEmailProveedor()).orElseThrow(() -> new NotFoundException("El email ingresado no existe"));
             Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor));
             return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
         }
