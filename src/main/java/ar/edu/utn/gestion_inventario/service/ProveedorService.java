@@ -42,9 +42,8 @@ public class ProveedorService {
     {
         List<Proveedor> lista = proveedorRepository.findAll();
         comprobarListaVacia(lista);
-        List<ProveedorListDTO> dto = lista.stream().map(proveedor -> new ProveedorListDTO(proveedor.getId(),
+        return lista.stream().map(proveedor -> new ProveedorListDTO(proveedor.getId(),
                 proveedor.getNombre(), proveedor.getTelefono(), proveedor.getEmail())).toList();
-        return dto;
     }
 
     public ProveedorDetailDTO visualizarProveedorPorId(Long id){
