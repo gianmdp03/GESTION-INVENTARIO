@@ -22,14 +22,14 @@ public class ProductoController {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.crearProducto(dto));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<ProductoDetailDTO> modificarProducto(@PathVariable Long id, @Valid @RequestBody ProductoRequestPutDTO dto)
+    public ResponseEntity<ProductoDetailDTO> modificarProductoPorId(@PathVariable Long id, @Valid @RequestBody ProductoRequestPutDTO dto)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarProducto(id, dto));
+        return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarProductoPorId(id, dto));
     }
     @PatchMapping("/{id}")
     public ResponseEntity<ProductoDetailDTO> modificarPrecioPorId(@PathVariable Long id, @Valid @RequestBody ProductoRequestPatchDTO dto)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarPrecioPorID(id, dto));
+        return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarPrecioPorId(id, dto));
     }
 
     @GetMapping

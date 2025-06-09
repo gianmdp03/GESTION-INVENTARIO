@@ -44,7 +44,7 @@ public class ProductoService {
             return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecio(), producto.getCodigoBarras());
         }
     }
-    public ProductoDetailDTO modificarProducto(Long id, ProductoRequestPutDTO dto)
+    public ProductoDetailDTO modificarProductoPorId(Long id, ProductoRequestPutDTO dto)
     {
         return productoRepository.findById(id).map(producto -> {
             producto.setNombre(dto.getNombre());
@@ -57,7 +57,7 @@ public class ProductoService {
             return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecio(), producto.getCodigoBarras());
         }).orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));
     }
-    public ProductoDetailDTO modificarPrecioPorID(Long id, ProductoRequestPatchDTO dto)
+    public ProductoDetailDTO modificarPrecioPorId(Long id, ProductoRequestPatchDTO dto)
     {
         return productoRepository.findById(id).map(producto -> {
             producto.setPrecio(dto.getPrecio());
