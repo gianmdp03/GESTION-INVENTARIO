@@ -1,9 +1,6 @@
 package ar.edu.utn.gestion_inventario.service;
 
-import ar.edu.utn.gestion_inventario.dto.producto.ProductoDetailDTO;
-import ar.edu.utn.gestion_inventario.dto.producto.ProductoListDTO;
-import ar.edu.utn.gestion_inventario.dto.producto.ProductoRequestDTO;
-import ar.edu.utn.gestion_inventario.dto.producto.ProductoRequestPatchDTO;
+import ar.edu.utn.gestion_inventario.dto.producto.*;
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.model.Descuento;
 import ar.edu.utn.gestion_inventario.model.Producto;
@@ -46,6 +43,19 @@ public class ProductoService {
             Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor));
             return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
         }
+    }
+    public ProductoDetailDTO modificarProducto(Long id, ProductoRequestPutDTO dto)
+    {
+        return productoRepository.findById(id).map(producto -> {
+            producto.setNombre(dto.getNombre());
+            producto.setDescripcion(dto.getDescripcion());
+            producto.setCategoria(dto.getCategoria());
+            producto.setPrecioUnitario(dto.getPrecio());
+
+            producto = productoRepository.save(producto);
+
+            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
+        }).orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));
     }
     public ProductoDetailDTO modificarPrecioPorID(Long id, ProductoRequestPatchDTO dto)
     {
