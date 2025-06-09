@@ -24,7 +24,7 @@ public class ExistenciaService {
 
     public ExistenciaDetailDTO crearExistencia(ExistenciaRequestDTO dto)
     {
-        Producto producto = productoRepository.getReferenceById(dto.getIdProducto());
+        Producto producto = productoRepository.findById(dto.getIdProducto()).orElseThrow(() -> new NotFoundException("El ID de producto ingresado no existe"));
         Existencia existencia = existenciaRepository.save(new Existencia(dto.getCantidad(), dto.getFechaEntrada(), dto.getFechaVencimiento(), producto));
         return new ExistenciaDetailDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre());
     }
