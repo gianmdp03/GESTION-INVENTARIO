@@ -1,19 +1,24 @@
 package ar.edu.utn.gestion_inventario.dto.existencia;
 
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
 public class ExistenciaRequestDTO {
-    @NotNull
+    @NotNull(message = "La cantidad no puede estar vacía")
     private int cantidad;
-    @NotNull
-    @PastOrPresent
+
+    @NotNull(message = "La fecha de entrada no puede estar vacía")
+    @PastOrPresent(message = "La fecha de entrada no puede ser futura")
     private LocalDate fechaEntrada;
-    @NotNull
+
+    @NotNull(message = "La fecha de vencimiento no puede estar vacía")
+    @Future(message = "La fecha de vencimiento tiene que ser futura")
     private LocalDate fechaVencimiento;
-    @NotNull
+
+    @NotNull(message = "El ID de producto es obligatorio")
     private Long idProducto;
 
     public ExistenciaRequestDTO() {
