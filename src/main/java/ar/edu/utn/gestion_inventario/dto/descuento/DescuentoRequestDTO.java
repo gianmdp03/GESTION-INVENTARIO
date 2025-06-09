@@ -1,5 +1,7 @@
 package ar.edu.utn.gestion_inventario.dto.descuento;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
@@ -11,13 +13,15 @@ public class DescuentoRequestDTO {
 
     private String descripcion;
 
-    @NotNull
+    @NotNull(message = "El porcentaje no puede estar vacío")
     private BigDecimal porcentaje;
 
-    @NotNull
+    @FutureOrPresent(message = "La fecha de inicio no puede ser pasada")
+    @NotNull(message = "La fecha de inicio es obligatoria")
     private LocalDate fechaInicio;
 
-    @NotNull
+    @Future(message = "La fecha de fin no puede ser pasada ni presente")
+    @NotNull(message = "La fecha de fin es obligatoria")
     private LocalDate fechaFin;
 
     private List<Long> productos = new ArrayList<>();
