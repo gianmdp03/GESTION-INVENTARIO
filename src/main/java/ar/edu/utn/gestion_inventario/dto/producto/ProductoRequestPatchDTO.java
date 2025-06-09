@@ -1,11 +1,13 @@
 package ar.edu.utn.gestion_inventario.dto.producto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.math.BigDecimal;
 
 public class ProductoRequestPatchDTO {
-    @NotNull
+    @PositiveOrZero(message = "El precio del producto no puede ser negativo")
+    @NotNull(message = "El precio del producto no puede ser negativo")
     private BigDecimal precio;
 
     public ProductoRequestPatchDTO(BigDecimal precio) {
