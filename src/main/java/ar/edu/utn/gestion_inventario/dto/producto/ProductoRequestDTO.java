@@ -8,22 +8,23 @@ import jakarta.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 public class ProductoRequestDTO {
-    @NotBlank
+    @NotBlank(message = "El nombre del producto no puede estar vacío")
     private String nombre;
+
     private String descripcion;
 
-    @NotBlank
+    @NotBlank(message = "La categoría del producto no puede estar vacía")
     private String categoria;
 
-    @PositiveOrZero
-    @NotNull
+    @PositiveOrZero(message = "El precio del producto no puede ser negativo")
+    @NotNull(message = "El precio del producto no puede ser negativo")
     private BigDecimal precio;
 
-    @NotBlank
+    @NotBlank(message = "El código de barras del producto es obligatorio")
     private String codigoBarras;
 
-    @Email
-    @NotBlank
+    @Email(message = "Debe ingresar el email del proveedor de forma correcta")
+    @NotBlank(message = "El email del proveedor no puede estar vacío")
     private String emailProveedor;
 
     private Long idDescuento;
