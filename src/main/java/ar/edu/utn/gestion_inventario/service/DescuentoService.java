@@ -9,7 +9,6 @@ import ar.edu.utn.gestion_inventario.model.Descuento;
 import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.repository.DescuentoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
-import ar.edu.utn.gestion_inventario.validation.DescuentoValidator;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,11 +29,10 @@ public class DescuentoService {
     public DescuentoDetailDTO crearDescuento(DescuentoRequestDTO dto)
     {
         List<ProductoShortListDTO> productos = new ArrayList<>();
-        List<Producto> listaAuxiliar = new ArrayList<>();
         Descuento descuento = new Descuento(dto.getDescripcion(), dto.getPorcentaje(), dto.getFechaInicio(), dto.getFechaFin());
         if(dto.getProductos() != null && !(dto.getProductos().isEmpty()))
         {
-            listaAuxiliar = productoRepository.findAllById(dto.getProductos());
+            List<Producto> listaAuxiliar = productoRepository.findAllById(dto.getProductos());
             descuento.setProductos(listaAuxiliar);
             productos = listaAuxiliar.stream().map(producto -> new ProductoShortListDTO(producto.getId(), producto.getNombre())).toList();
         }
@@ -62,22 +60,23 @@ public class DescuentoService {
 
     public List<DescuentoListDTO> listarDescuentos()
     {
-        verificarListaVacia(descuentoRepository.findAll());
-        return descuentoRepository.findAll().stream().map(descuento ->
+        List<Descuento> lista = descuentoRepository.findAll();
+        verificarListaVacia(lista);
+        return lista.stream().map(descuento ->
                 new DescuentoListDTO(descuento.getId(), descuento.getPorcentaje(), descuento.getFechaInicio(), descuento.getFechaFin())).toList();
     }
 
     public List<DescuentoListDTO> filtrarPorFechaInicioASC(){
-        verificarListaVacia(descuentoRepository.findAll());
-        return descuentoRepository.findAllByOrderByFechaInicioAsc().stream().map(descuento -> new DescuentoListDTO(descuento.getId(),descuento.getPorcentaje(),descuento.getFechaInicio(),descuento.getFechaFin())).toList();
+        List<Descuento> lista = descuentoRepository.findAll();
+        verificarListaVacia(lista);
+        return lista.stream().map(descuento -> new DescuentoListDTO(descuento.getId(),descuento.getPorcentaje(),descuento.getFechaInicio(),descuento.getFechaFin())).toList();
     }
 
     public DescuentoDetailDTO visualizarDescuentoPorId(Long id){
-        List<ProductoShortListDTO> lista;
-        Descuento descuento = descuentoRepository.getReferenceById(id);
-        lista = descuento.getProductos().stream().map(producto->new ProductoShortListDTO(producto.getId(),producto.getNombre())).toList();
-        return descuentoRepository.findById(id).map(desc -> new DescuentoDetailDTO(desc.getId(),desc.getDescripcion(),desc.getPorcentaje(),desc.getFechaInicio(),desc.getFechaFin(),lista)).orElseThrow(
-                ()->new NotFoundException("El id ingresado no existe"));
+        Descuento descuento = descuentoRepository.findById(id).orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));
+        List<ProductoShortListDTO> lista = descuento.getProductos().stream().map(producto->new ProductoShortListDTO(producto.getId(),producto.getNombre())).toList();
+        return descuentoRepository.findById(id).map(desc -> new DescuentoDetailDTO(desc.getId(),desc.getDescripcion(),desc.getPorcentaje(),desc.getFechaInicio(),desc.getFechaFin(),lista))
+                .orElseThrow(()->new NotFoundException("El id ingresado no existe"));
     }
 
     @Transactional
