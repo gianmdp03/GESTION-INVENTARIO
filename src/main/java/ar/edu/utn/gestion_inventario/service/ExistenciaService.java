@@ -11,6 +11,8 @@ import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.time.LocalDate;
 import java.util.List;
 import static ar.edu.utn.gestion_inventario.validation.ExistenciaValidator.*;
 @Service
@@ -65,6 +67,11 @@ public class ExistenciaService {
     public ExistenciaDetailDTO visualizarExistenciaPorId(Long id)
     {
         return existenciaRepository.findById(id).map(existencia->new ExistenciaDetailDTO(existencia.getId(),existencia.getCantidad(),existencia.getFechaEntrada(),existencia.getFechaVencimiento(),existencia.getProducto().getNombre())).orElseThrow(() -> new NotFoundException("El id ingresado no existe"));
+    }
+
+    public void eliminarExistenciasVencidas()
+    {
+        existenciaRepository.deleteByFechaVencimientoBefore(LocalDate.now());
     }
 
     public void eliminarExistencia(Long id)
