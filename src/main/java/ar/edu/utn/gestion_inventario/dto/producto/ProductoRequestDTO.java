@@ -3,6 +3,7 @@ package ar.edu.utn.gestion_inventario.dto.producto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.math.BigDecimal;
 
@@ -10,12 +11,17 @@ public class ProductoRequestDTO {
     @NotBlank
     private String nombre;
     private String descripcion;
+
     @NotBlank
     private String categoria;
+
+    @PositiveOrZero
     @NotNull
     private BigDecimal precio;
+
     @NotBlank
     private String codigoBarras;
+
     @Email
     @NotBlank
     private String emailProveedor;
