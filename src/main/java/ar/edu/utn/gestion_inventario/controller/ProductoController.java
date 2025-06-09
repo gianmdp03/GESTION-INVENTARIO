@@ -31,7 +31,11 @@ public class ProductoController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarPrecioPorId(id, dto));
     }
-
+    @PatchMapping("/codigobarras/{codigobarras}")
+    public ResponseEntity<ProductoDetailDTO> modificarPrecioPorCodigoBarras(@PathVariable String codigoBarras, @Valid @RequestBody ProductoRequestPatchDTO dto)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarPrecioPorCodigoBarras(codigoBarras, dto));
+    }
     @GetMapping
     public ResponseEntity<List<ProductoListDTO>> listarProductos()
     {
