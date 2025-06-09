@@ -3,7 +3,7 @@ package ar.edu.utn.gestion_inventario.service;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoDetailDTO;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoListDTO;
 import ar.edu.utn.gestion_inventario.dto.producto.ProductoRequestDTO;
-import ar.edu.utn.gestion_inventario.dto.producto.ProductoRequestPutDTO;
+import ar.edu.utn.gestion_inventario.dto.producto.ProductoRequestPatchDTO;
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.model.Descuento;
 import ar.edu.utn.gestion_inventario.model.Producto;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Optional;
+
 import static ar.edu.utn.gestion_inventario.validation.ProductoValidator.*;
 @Service
 @Validated
@@ -47,7 +47,7 @@ public class ProductoService {
             return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
         }
     }
-    public ProductoDetailDTO modificarPrecioPorID(Long id, ProductoRequestPutDTO dto)
+    public ProductoDetailDTO modificarPrecioPorID(Long id, ProductoRequestPatchDTO dto)
     {
         return productoRepository.findById(id).map(producto -> {
             producto.setPrecioUnitario(dto.getPrecioUnitario());

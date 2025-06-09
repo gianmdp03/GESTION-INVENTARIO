@@ -4,15 +4,15 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-public class ProductoRequestPutDTO {
+public class ProductoRequestPatchDTO {
     @NotNull
     private BigDecimal precioUnitario;
 
-    public ProductoRequestPutDTO(BigDecimal precioUnitario) {
+    public ProductoRequestPatchDTO(BigDecimal precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
-    public ProductoRequestPutDTO() {
+    public ProductoRequestPatchDTO() {
     }
 
     public BigDecimal getPrecioUnitario() {

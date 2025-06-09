@@ -23,7 +23,7 @@ public class ProductoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ProductoDetailDTO> modificarPrecioPorId(@PathVariable Long id, @Valid @RequestBody ProductoRequestPutDTO dto)
+    public ResponseEntity<ProductoDetailDTO> modificarPrecioPorId(@PathVariable Long id, @Valid @RequestBody ProductoRequestPatchDTO dto)
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarPrecioPorID(id, dto));
     }
