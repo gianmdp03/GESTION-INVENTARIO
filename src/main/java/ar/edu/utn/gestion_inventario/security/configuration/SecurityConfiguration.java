@@ -45,7 +45,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/producto/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 .requestMatchers("/api/producto/email/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 .requestMatchers("/api/producto/categoria/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
-                .requestMatchers("/api/producto/codigobarras").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                .requestMatchers("/api/producto/codigobarras/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                 .anyRequest().authenticated()
         ).userDetailsService(usuarioService).httpBasic(Customizer.withDefaults()).sessionManagement(
                 session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
