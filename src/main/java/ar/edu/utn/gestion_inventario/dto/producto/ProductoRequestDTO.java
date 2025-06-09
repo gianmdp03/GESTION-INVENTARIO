@@ -13,7 +13,7 @@ public class ProductoRequestDTO {
     @NotBlank
     private String categoria;
     @NotNull
-    private BigDecimal precioUnitario;
+    private BigDecimal precio;
     @NotBlank
     private String codigoBarras;
     @Email
@@ -25,37 +25,37 @@ public class ProductoRequestDTO {
     public ProductoRequestDTO() {
     }
 
-    public ProductoRequestDTO(String nombre, String categoria, BigDecimal precioUnitario, String codigoBarras, String emailProveedor) {
+    public ProductoRequestDTO(String nombre, String categoria, BigDecimal precio, String codigoBarras, String emailProveedor) {
         this.nombre = nombre;
         this.categoria = categoria;
-        this.precioUnitario = precioUnitario;
+        this.precio = precio;
         this.codigoBarras = codigoBarras;
         this.emailProveedor = emailProveedor;
     }
 
-    public ProductoRequestDTO(String nombre, String descripcion, String categoria, BigDecimal precioUnitario, String codigoBarras, String emailProveedor) {
+    public ProductoRequestDTO(String nombre, String descripcion, String categoria, BigDecimal precio, String codigoBarras, String emailProveedor) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
-        this.precioUnitario = precioUnitario;
+        this.precio = precio;
         this.codigoBarras = codigoBarras;
         this.emailProveedor = emailProveedor;
     }
 
-    public ProductoRequestDTO(String nombre, String categoria, BigDecimal precioUnitario, String codigoBarras, String emailProveedor, Long idDescuento) {
+    public ProductoRequestDTO(String nombre, String categoria, BigDecimal precio, String codigoBarras, String emailProveedor, Long idDescuento) {
         this.nombre = nombre;
         this.categoria = categoria;
-        this.precioUnitario = precioUnitario;
+        this.precio = precio;
         this.codigoBarras = codigoBarras;
         this.emailProveedor = emailProveedor;
         this.idDescuento = idDescuento;
     }
 
-    public ProductoRequestDTO(String nombre, String descripcion, String categoria, BigDecimal precioUnitario, String codigoBarras, Long idDescuento, String emailProveedor) {
+    public ProductoRequestDTO(String nombre, String descripcion, String categoria, BigDecimal precio, String codigoBarras, Long idDescuento, String emailProveedor) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
-        this.precioUnitario = precioUnitario;
+        this.precio = precio;
         this.codigoBarras = codigoBarras;
         this.idDescuento = idDescuento;
         this.emailProveedor = emailProveedor;
@@ -85,12 +85,12 @@ public class ProductoRequestDTO {
         this.categoria = categoria;
     }
 
-    public BigDecimal getPrecioUnitario() {
-        return precioUnitario;
+    public BigDecimal getPrecio() {
+        return precio;
     }
 
-    public void setPrecioUnitario(BigDecimal precioUnitario) {
-        this.precioUnitario = precioUnitario;
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
 
     public String getCodigoBarras() {

@@ -35,13 +35,13 @@ public class ProductoService {
         if(dto.getIdDescuento() != null)
         {
             Descuento descuento = descuentoRepository.getReferenceById(dto.getIdDescuento());
-            Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor, descuento));
-            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
+            Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecio(), dto.getCodigoBarras(), proveedor, descuento));
+            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecio(), producto.getCodigoBarras());
         }
         else
         {
-            Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecioUnitario(), dto.getCodigoBarras(), proveedor));
-            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
+            Producto producto = productoRepository.save(new Producto(dto.getNombre(), dto.getDescripcion(), dto.getCategoria(), dto.getPrecio(), dto.getCodigoBarras(), proveedor));
+            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecio(), producto.getCodigoBarras());
         }
     }
     public ProductoDetailDTO modificarProducto(Long id, ProductoRequestPutDTO dto)
@@ -50,20 +50,20 @@ public class ProductoService {
             producto.setNombre(dto.getNombre());
             producto.setDescripcion(dto.getDescripcion());
             producto.setCategoria(dto.getCategoria());
-            producto.setPrecioUnitario(dto.getPrecio());
+            producto.setPrecio(dto.getPrecio());
 
             producto = productoRepository.save(producto);
 
-            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
+            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecio(), producto.getCodigoBarras());
         }).orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));
     }
     public ProductoDetailDTO modificarPrecioPorID(Long id, ProductoRequestPatchDTO dto)
     {
         return productoRepository.findById(id).map(producto -> {
-            producto.setPrecioUnitario(dto.getPrecioUnitario());
+            producto.setPrecio(dto.getPrecio());
             producto = productoRepository.save(producto);
 
-            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecioUnitario(), producto.getCodigoBarras());
+            return new ProductoDetailDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getCategoria(), producto.getPrecio(), producto.getCodigoBarras());
         }).orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));
     }
 
@@ -72,7 +72,7 @@ public class ProductoService {
         List<Producto> lista = productoRepository.findAll();
         comprobarListaVacia(lista);
         return lista.stream().map(producto -> new ProductoListDTO(producto.getId(), producto.getNombre(),
-            producto.getCategoria(), producto.getPrecioUnitario())).toList();
+            producto.getCategoria(), producto.getPrecio())).toList();
     }
 
     public void eliminarProducto(Long id) {
@@ -91,7 +91,7 @@ public class ProductoService {
         List<Producto> lista = productoRepository.findAllByProveedorEmail(email);
         comprobarListaVacia(lista);
         return lista.stream().map(producto ->
-                new ProductoListDTO(producto.getId(), producto.getNombre(), producto.getCategoria(), producto.getPrecioUnitario())).toList();
+                new ProductoListDTO(producto.getId(), producto.getNombre(), producto.getCategoria(), producto.getPrecio())).toList();
     }
 
     public List<ProductoListDTO> buscarPorCategoria(String categoria)
@@ -99,16 +99,16 @@ public class ProductoService {
         List<Producto> lista = productoRepository.findAllByCategoria(categoria);
         comprobarListaVacia(lista);
         return lista.stream().map(producto ->
-                new ProductoListDTO(producto.getId(), producto.getNombre(), producto.getCategoria(), producto.getPrecioUnitario())).toList();
+                new ProductoListDTO(producto.getId(), producto.getNombre(), producto.getCategoria(), producto.getPrecio())).toList();
     }
 
     public ProductoDetailDTO visualizarProductoPorId(Long id){
-        return productoRepository.findById(id).map(producto -> new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecioUnitario(),producto.getCodigoBarras()))
+        return productoRepository.findById(id).map(producto -> new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecio(),producto.getCodigoBarras()))
                 .orElseThrow(() -> new NotFoundException("El ID ingresado no existe"));
     }
 
     public ProductoDetailDTO visualizarProductoPorCodigoDeBarras(String codigoBarras){
-        return productoRepository.findByCodigoBarras(codigoBarras).map(producto ->  new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecioUnitario(),producto.getCodigoBarras()))
+        return productoRepository.findByCodigoBarras(codigoBarras).map(producto ->  new ProductoDetailDTO(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getCategoria(),producto.getPrecio(),producto.getCodigoBarras()))
                 .orElseThrow(() -> new NotFoundException("El codigo de barras ingresado no existe"));
     }
 

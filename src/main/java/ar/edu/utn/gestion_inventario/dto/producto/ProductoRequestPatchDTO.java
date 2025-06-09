@@ -6,20 +6,20 @@ import java.math.BigDecimal;
 
 public class ProductoRequestPatchDTO {
     @NotNull
-    private BigDecimal precioUnitario;
+    private BigDecimal precio;
 
-    public ProductoRequestPatchDTO(BigDecimal precioUnitario) {
-        this.precioUnitario = precioUnitario;
+    public ProductoRequestPatchDTO(BigDecimal precio) {
+        this.precio = precio;
     }
 
     public ProductoRequestPatchDTO() {
     }
 
-    public BigDecimal getPrecioUnitario() {
-        return precioUnitario;
+    public BigDecimal getPrecio() {
+        return precio;
     }
 
-    public void setPrecioUnitario(BigDecimal precioUnitario) {
-        this.precioUnitario = precioUnitario;
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
 }

@@ -22,7 +22,7 @@ public class Producto {
     private String categoria;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal precioUnitario;
+    private BigDecimal precio;
 
     @Column(nullable = false, unique = true)
     private String codigoBarras;
@@ -46,21 +46,21 @@ public class Producto {
         this.codigoBarras = codigoBarras;
     }
 
-    public Producto(String nombre, String descripcion, String categoria, BigDecimal precioUnitario, String codigoBarras, Proveedor proveedor, Descuento descuento) {
+    public Producto(String nombre, String descripcion, String categoria, BigDecimal precio, String codigoBarras, Proveedor proveedor, Descuento descuento) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
-        this.precioUnitario = precioUnitario;
+        this.precio = precio;
         this.codigoBarras = codigoBarras;
         this.proveedor = proveedor;
         this.descuento = descuento;
     }
 
-    public Producto(String nombre, String descripcion, String categoria, BigDecimal precioUnitario, String codigoBarras, Proveedor proveedor) {
+    public Producto(String nombre, String descripcion, String categoria, BigDecimal precio, String codigoBarras, Proveedor proveedor) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
-        this.precioUnitario = precioUnitario;
+        this.precio = precio;
         this.codigoBarras = codigoBarras;
         this.proveedor = proveedor;
     }
@@ -97,12 +97,12 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public BigDecimal getPrecioUnitario() {
-        return precioUnitario;
+    public BigDecimal getPrecio() {
+        return precio;
     }
 
-    public void setPrecioUnitario(BigDecimal precioUnitario) {
-        this.precioUnitario = precioUnitario;
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
 
     public String getCodigoBarras() {
