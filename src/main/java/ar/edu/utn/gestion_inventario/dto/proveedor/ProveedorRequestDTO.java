@@ -4,14 +4,17 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class ProveedorRequestDTO {
-    @NotBlank
+    @NotBlank(message = "El nombre del proveedor no puede estar vacío")
     private String nombre;
-    @NotBlank
+
+    @NotBlank(message = "El teléfono del proveedor es obligatorio")
     private String telefono;
-    @Email
-    @NotBlank
+
+    @Email(message = "Debe ingresar el email del proveedor de forma correcta")
+    @NotBlank(message = "El email del proveedor no puede estar vacío")
     private String email;
-    @NotBlank
+
+    @NotBlank(message = "La dirección del proveedor es obligatoria")
     private String direccion;
 
     public ProveedorRequestDTO() {
