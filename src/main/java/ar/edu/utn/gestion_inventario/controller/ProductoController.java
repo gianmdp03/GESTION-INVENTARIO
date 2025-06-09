@@ -39,9 +39,10 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarProductoPorId(@PathVariable Long id)
+    public ResponseEntity<Void> eliminarProductoPorId(@PathVariable Long id)
     {
         productoService.eliminarProducto(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/email/{email}")
