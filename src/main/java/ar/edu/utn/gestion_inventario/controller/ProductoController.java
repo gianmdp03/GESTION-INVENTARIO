@@ -31,12 +31,12 @@ public class ProductoController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarPrecioPorId(id, dto));
     }
-    @PutMapping("/codigobarras/{codigobarras}")
+    @PutMapping("/codigobarras/{codigoBarras}")
     public ResponseEntity<ProductoDetailDTO> modificarProductoPorCodigoBarras(@PathVariable String codigoBarras, @Valid @RequestBody ProductoRequestPutDTO dto)
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarProductoPorCodigoBarras(codigoBarras, dto));
     }
-    @PatchMapping("/codigobarras/{codigobarras}")
+    @PatchMapping("/codigobarras/{codigoBarras}")
     public ResponseEntity<ProductoDetailDTO> modificarPrecioPorCodigoBarras(@PathVariable String codigoBarras, @Valid @RequestBody ProductoRequestPatchDTO dto)
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.modificarPrecioPorCodigoBarras(codigoBarras, dto));
@@ -72,13 +72,13 @@ public class ProductoController {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.visualizarProductoPorId(id));
     }
 
-    @GetMapping("/codigobarras/{codigobarras}")
+    @GetMapping("/codigobarras/{codigoBarras}")
     public ResponseEntity<ProductoDetailDTO> visualizarProductoPorCodigoDeBarras(@PathVariable String codigoBarras)
     {
         return ResponseEntity.status(HttpStatus.OK).body(productoService.visualizarProductoPorCodigoDeBarras(codigoBarras));
     }
 
-    @DeleteMapping("/codigobarras/{codigobarras}")
+    @DeleteMapping("/codigobarras/{codigoBarras}")
     public ResponseEntity<Void> eliminarProductoPorCodigoDeBarras(@PathVariable String codigoBarras)
     {
         productoService.eliminarProductoPorCodigoDeBarras(codigoBarras);
