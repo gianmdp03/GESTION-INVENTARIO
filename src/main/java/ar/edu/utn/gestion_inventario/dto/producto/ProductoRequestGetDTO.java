@@ -3,7 +3,7 @@ package ar.edu.utn.gestion_inventario.dto.producto;
 import jakarta.validation.constraints.NotBlank;
 
 public class ProductoRequestGetDTO {
-    @NotBlank
+    @NotBlank(message = "El código de barras del producto es obligatorio")
     private String codigoBarras;
 
     public ProductoRequestGetDTO() {
