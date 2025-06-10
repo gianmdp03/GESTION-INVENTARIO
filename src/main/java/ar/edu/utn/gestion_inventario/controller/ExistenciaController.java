@@ -38,13 +38,13 @@ public class ExistenciaController {
     }
 
     @GetMapping("/stock/mas/{cantidad}")
-    public ResponseEntity<List<ExistenciaListDTO>> listarExistenciasConMasCantidad(@PathVariable int cantidad)
+    public ResponseEntity<List<ExistenciaListDTO>> listarExistenciasConMasCantidad(@PathVariable Long cantidad)
     {
         return ResponseEntity.status(HttpStatus.OK).body(existenciaService.listarExistenciasConMasCantidad(cantidad));
     }
 
     @GetMapping("/stock/menos/{cantidad}")
-    public ResponseEntity<List<ExistenciaListDTO>> listarExistenciasConMenosCantidad(@PathVariable int cantidad)
+    public ResponseEntity<List<ExistenciaListDTO>> listarExistenciasConMenosCantidad(@PathVariable Long cantidad)
     {
         return ResponseEntity.status(HttpStatus.OK).body(existenciaService.listarExistenciasConMenosCantidad(cantidad));
     }

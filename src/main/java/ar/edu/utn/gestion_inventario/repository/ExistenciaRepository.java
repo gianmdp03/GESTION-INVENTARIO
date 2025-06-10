@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ExistenciaRepository extends JpaRepository<Existencia, Long> {
-    List<Existencia> findAllByCantidadLessThanOrderByCantidadAsc(int cantidad);
-    List<Existencia> findAllByCantidadGreaterThanOrderByCantidadDesc(int cantidad);
+    List<Existencia> findAllByCantidadLessThanOrderByCantidadAsc(Long cantidad);
+    List<Existencia> findAllByCantidadGreaterThanOrderByCantidadDesc(Long cantidad);
     void deleteByFechaVencimientoBefore(LocalDate fecha);
 }

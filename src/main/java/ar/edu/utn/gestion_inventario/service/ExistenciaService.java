@@ -49,15 +49,20 @@ public class ExistenciaService {
                 new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
     }
 
-    public List<ExistenciaListDTO> listarExistenciasConMasCantidad(int cantidad)
+    public List<ExistenciaListDTO> listarExistenciasConMasCantidad(Long cantidad)
     {
+        Long total = existenciaRepository.count();
+        if(cantidad>total)
+        {
+            cantidad = total;
+        }
         List<Existencia> lista = existenciaRepository.findAllByCantidadGreaterThanOrderByCantidadDesc(cantidad);
         verificarListaVacia(lista);
         return lista.stream().map(existencia -> new ExistenciaListDTO(existencia.getId(),
                 existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getProducto().getNombre())).toList();
     }
 
-    public List<ExistenciaListDTO> listarExistenciasConMenosCantidad(int cantidad)
+    public List<ExistenciaListDTO> listarExistenciasConMenosCantidad(Long cantidad)
     {
         List<Existencia> lista = existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad);
         verificarListaVacia(lista);
