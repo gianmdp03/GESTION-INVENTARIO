@@ -37,7 +37,7 @@ public class UsuarioController {
     }
 
     @PatchMapping("/{username}")
-    public ResponseEntity<UsuarioDetailDTO> convertirEnAdministrador(@RequestBody String username)
+    public ResponseEntity<UsuarioDetailDTO> convertirEnAdministrador(@PathVariable String username)
     {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.convertirEnAdministrador(username));
     }
