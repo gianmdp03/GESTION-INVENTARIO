@@ -67,7 +67,7 @@ public class DescuentoService {
     }
 
     public List<DescuentoListDTO> filtrarPorFechaInicioASC(){
-        List<Descuento> lista = descuentoRepository.findAll();
+        List<Descuento> lista = descuentoRepository.findAllByOrderByFechaInicioAsc();
         verificarListaVacia(lista);
         return lista.stream().map(descuento -> new DescuentoListDTO(descuento.getId(),descuento.getPorcentaje(),descuento.getFechaInicio(),descuento.getFechaFin())).toList();
     }
