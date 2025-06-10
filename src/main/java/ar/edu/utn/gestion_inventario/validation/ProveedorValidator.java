@@ -27,4 +27,9 @@ public class ProveedorValidator {
             throw  new NotFoundException("El email ya existe");
         }
     }
+    public static void verificarSiExisteEmail(String email, ProveedorRepository proveedorRepository){
+        if(!(proveedorRepository.existsByEmail(email))){
+            throw  new NotFoundException("El email no existe");
+        }
+    }
 }
