@@ -65,7 +65,7 @@ public class ExistenciaService {
     public List<ExistenciaListDTO> listarExistenciasConMenosCantidad(Long cantidad)
     {
         Long total = existenciaRepository.count();
-        if(cantidad>total)
+        if(cantidad<total)
         {
             cantidad = total;
         }
