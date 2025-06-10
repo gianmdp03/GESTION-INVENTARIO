@@ -12,4 +12,5 @@ public class DescuentoValidator {
             throw new NotFoundException("No se encontraron descuentos");
         }
     }
+
 }
