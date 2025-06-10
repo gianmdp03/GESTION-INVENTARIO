@@ -60,4 +60,8 @@ public class ProveedorService {
         verificarSiExisteID(id, proveedorRepository);
         proveedorRepository.deleteById(id);
     }
+    public void eliminarProveedorPorEmail(String email){
+        verificarSiExisteEmail(email,proveedorRepository);
+        proveedorRepository.deleteByEmail(email);
+    }
 }

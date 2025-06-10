@@ -13,4 +13,5 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {
     Optional<Proveedor> getReferenceByEmail(String email);
     Optional<Proveedor> findByEmail(String email);
     boolean existsByEmail(String email);
+    void deleteByEmail(String email);
 }
