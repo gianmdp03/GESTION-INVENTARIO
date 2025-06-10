@@ -2,17 +2,17 @@ package ar.edu.utn.gestion_inventario.security.usuario.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class UsuarioPutRequestDTO {
+public class UsuarioPatchRequestDTO {
     @NotBlank
     private String usernameActual;
 
     @NotBlank
     private String usernameNuevo;
 
-    public UsuarioPutRequestDTO() {
+    public UsuarioPatchRequestDTO() {
     }
 
-    public UsuarioPutRequestDTO(String usernameActual, String usernameNuevo) {
+    public UsuarioPatchRequestDTO(String usernameActual, String usernameNuevo) {
         this.usernameActual = usernameActual;
         this.usernameNuevo = usernameNuevo;
     }
