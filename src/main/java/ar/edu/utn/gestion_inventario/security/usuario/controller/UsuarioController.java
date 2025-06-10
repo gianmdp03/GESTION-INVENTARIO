@@ -30,7 +30,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.crearUsuario(usuario));
     }
 
-    @PutMapping
+    @PatchMapping
     public ResponseEntity<UsuarioDetailDTO> modificarUsuario(@Valid @RequestBody UsuarioPutRequestDTO dto)
     {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.modificarUsername(dto.getUsernameActual(), dto.getUsernameNuevo()));
