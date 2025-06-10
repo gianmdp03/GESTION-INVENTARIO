@@ -91,4 +91,8 @@ public class ExistenciaService {
         verificarSiExisteID(id, existenciaRepository);
         existenciaRepository.deleteById(id);
     }
+
+    public List<ExistenciaListDTO> listarExistenciasConStock0(){
+        return existenciaRepository.findAllWithStockZero();
+    }
 }
