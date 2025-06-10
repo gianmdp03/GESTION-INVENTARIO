@@ -64,6 +64,11 @@ public class ExistenciaService {
 
     public List<ExistenciaListDTO> listarExistenciasConMenosCantidad(Long cantidad)
     {
+        Long total = existenciaRepository.count();
+        if(cantidad>total)
+        {
+            cantidad = total;
+        }
         List<Existencia> lista = existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad);
         verificarListaVacia(lista);
         return lista.stream().map(existencia ->
