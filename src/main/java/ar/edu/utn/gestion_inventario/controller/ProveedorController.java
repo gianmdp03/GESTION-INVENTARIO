@@ -54,4 +54,13 @@ public class ProveedorController {
         proveedorService.eliminarProveedorPorId(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+    @DeleteMapping("/{email}")
+    public ResponseEntity<Void>eliminarProveedorPorEmail(@PathVariable String email){
+        proveedorService.eliminarProveedorPorEmail(email);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+    @PutMapping("/{email}")
+    public ResponseEntity<ProveedorDetailDTO>modificarProveedorPorEmail(@PathVariable String email, @RequestBody ProveedorRequestDTO proveedorRequestDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(proveedorService.modificarProveedorPorEmail(email,proveedorRequestDTO));
+    }
 }
