@@ -64,4 +64,14 @@ public class ProveedorService {
         verificarSiExisteEmail(email,proveedorRepository);
         proveedorRepository.deleteByEmail(email);
     }
+    public ProveedorDetailDTO modificarProveedorPorEmail(String email, ProveedorRequestDTO proveedorRequestDTO){
+        return proveedorRepository.findByEmail(email).map(proveedor -> {
+            proveedor.setDireccion(proveedorRequestDTO.getDireccion());
+            proveedor.setNombre(proveedorRequestDTO.getNombre());
+            proveedor.setTelefono(proveedorRequestDTO.getTelefono());
+            proveedor=proveedorRepository.save(proveedor);
+
+            return new ProveedorDetailDTO(proveedor.getId(),proveedor.getNombre(),proveedor.getTelefono(),proveedor.getEmail(),proveedor.getDireccion());
+        }).orElseThrow(()->new NotFoundException("EL email ingresado no pertenece a un proveedor"));
+    }
 }
