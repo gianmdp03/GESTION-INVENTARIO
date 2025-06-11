@@ -68,4 +68,9 @@ public class ExistenciaController {
         existenciaService.eliminarExistencia(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping("/stock/cero")
+    public ResponseEntity<List<ExistenciaListDTO>> listarExistenciasConStock0(){
+        return ResponseEntity.status(HttpStatus.OK).body(existenciaService.listarExistenciasConStock0());
+    }
 }
