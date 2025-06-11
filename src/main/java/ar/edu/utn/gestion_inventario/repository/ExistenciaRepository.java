@@ -15,6 +15,5 @@ public interface ExistenciaRepository extends JpaRepository<Existencia, Long> {
     List<Existencia> findAllByCantidadLessThanOrderByCantidadAsc(Long cantidad);
     List<Existencia> findAllByCantidadGreaterThanOrderByCantidadDesc(Long cantidad);
     void deleteByFechaVencimientoBefore(LocalDate fecha);
-    @Query("SELECT p FROM Producto p WHERE p.stock = 0")
-    List<ExistenciaListDTO> findAllWithStockZero();
+    @Query("SELECT new ar.edu.utn.gestion_inventario.dto.existencia.ExistenciaListDTO(e.id, e.cantidad, e.fechaVencimiento, e.producto.nombre) FROM Existencia e WHERE e.cantidad = 0")    List<ExistenciaListDTO> findAllWithCantidadZero();
 }

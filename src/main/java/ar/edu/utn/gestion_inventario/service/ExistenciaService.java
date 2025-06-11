@@ -93,6 +93,6 @@ public class ExistenciaService {
     }
 
     public List<ExistenciaListDTO> listarExistenciasConStock0(){
-        return existenciaRepository.findAllWithStockZero();
+        return existenciaRepository.findAllWithCantidadZero();
     }
 }
