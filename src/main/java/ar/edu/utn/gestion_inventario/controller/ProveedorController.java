@@ -24,7 +24,7 @@ public class ProveedorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(proveedorService.crearProveedor(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/id/{id}")
     public ResponseEntity<ProveedorDetailDTO> modificarProveedor(@PathVariable Long id, @Valid @RequestBody ProveedorRequestDTO dto)
     {
         return ResponseEntity.status(HttpStatus.OK).body(proveedorService.modificarProveedor(id, dto));
@@ -48,18 +48,18 @@ public class ProveedorController {
         return ResponseEntity.status(HttpStatus.OK).body(proveedorService.visualizarProveedorPorEmail(email));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> eliminarProveedorPorId(@PathVariable Long id)
     {
         proveedorService.eliminarProveedorPorId(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-    @DeleteMapping("/{email}")
+    @DeleteMapping("/email/{email}")
     public ResponseEntity<Void>eliminarProveedorPorEmail(@PathVariable String email){
         proveedorService.eliminarProveedorPorEmail(email);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-    @PutMapping("/{email}")
+    @PutMapping("/email/{email}")
     public ResponseEntity<ProveedorDetailDTO>modificarProveedorPorEmail(@PathVariable String email, @RequestBody ProveedorRequestDTO proveedorRequestDTO){
         return ResponseEntity.status(HttpStatus.OK).body(proveedorService.modificarProveedorPorEmail(email,proveedorRequestDTO));
     }
