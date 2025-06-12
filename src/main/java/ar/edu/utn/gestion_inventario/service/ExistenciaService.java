@@ -93,6 +93,9 @@ public class ExistenciaService {
     }
 
     public List<ExistenciaListDTO> listarExistenciasConStock0(){
-        return existenciaRepository.findAllWithCantidadZero();
+        List<Existencia> lista = existenciaRepository.findAllByCantidad(0);
+        verificarListaVacia(lista);
+        return lista.stream().map(existencia -> new ExistenciaListDTO(existencia.getId(),
+                existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
     }
 }

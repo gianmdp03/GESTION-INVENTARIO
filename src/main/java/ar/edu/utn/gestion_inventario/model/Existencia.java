@@ -20,7 +20,7 @@ public class Existencia {
     @Column(nullable = false)
     private LocalDate fechaVencimiento;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "producto_id")
     private Producto producto;
 
