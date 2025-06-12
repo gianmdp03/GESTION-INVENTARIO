@@ -4,7 +4,6 @@ import ar.edu.utn.gestion_inventario.exception.ConflictException;
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioDetailDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
