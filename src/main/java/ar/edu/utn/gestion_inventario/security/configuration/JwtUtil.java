@@ -3,6 +3,7 @@ package ar.edu.utn.gestion_inventario.security.configuration;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Date;
 import java.util.List;
