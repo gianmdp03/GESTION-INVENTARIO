@@ -1,7 +1,9 @@
 package ar.edu.utn.gestion_inventario.security.model;
 
+import ar.edu.utn.gestion_inventario.security.enums.Rol;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -26,6 +28,10 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Rol rol;
+
     public Usuario() {
     }
 
@@ -38,11 +44,20 @@ public class Usuario implements UserDetails {
         this.apellido = apellido;
         this.password = password;
         this.username = username;
+        this.rol = Rol.EMPLEADO;
+    }
+
+    public Usuario(String nombre, String apellido, String username, String password, Rol rol) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.password = password;
+        this.username = username;
+        this.rol = rol;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_" + rol.name()));
     }
 
     @Override
@@ -105,5 +120,13 @@ public class Usuario implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 }
