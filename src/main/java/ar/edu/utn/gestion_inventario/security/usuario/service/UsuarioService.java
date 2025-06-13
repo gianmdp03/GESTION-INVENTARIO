@@ -28,6 +28,14 @@ public class UsuarioService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    public UsuarioRegisterDetailDTO crearUsuarioSinAutorizacion(UsuarioRegisterRequestDTO dto)
+    {
+        Usuario usuario = new Usuario(dto.getNombre(), dto.getApellido(), dto.getUsername(), passwordEncoder.encode(dto.getPassword()), Rol.valueOf(dto.getRol()));
+        usuario = usuarioRepository.save(usuario);
+
+        return new UsuarioRegisterDetailDTO(usuario.getNombre(), usuario.getApellido(), usuario.getUsername(), usuario.getRol());
+    }
+
     public UsuarioRegisterDetailDTO crearUsuario(UsuarioRegisterRequestDTO dto) {
         Usuario usuario = new Usuario(dto.getNombre(), dto.getApellido(), dto.getUsername(), passwordEncoder.encode(dto.getPassword()), Rol.valueOf(dto.getRol()));
         usuario = usuarioRepository.save(usuario);

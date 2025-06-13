@@ -25,9 +25,10 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
                         //USUARIO
-
+                        .requestMatchers("/api/auth/admin").permitAll()
+                        .requestMatchers("/api/auth/registrar").hasRole("ADMINISTRADOR")
+                        .requestMatchers("/api/auth/login").hasRole("ADMINISTRADOR")
                         //PROVEEDOR
                         .requestMatchers("/api/proveedor").hasRole("ADMINISTRADOR")
                         .requestMatchers("/api/proveedor/*").hasRole("ADMINISTRADOR")
