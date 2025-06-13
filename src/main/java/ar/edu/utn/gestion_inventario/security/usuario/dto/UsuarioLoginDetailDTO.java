@@ -1,14 +1,14 @@
-package ar.edu.utn.gestion_inventario.security.configuration;
+package ar.edu.utn.gestion_inventario.security.usuario.dto;
 
-public class LoginResponse {
+public class UsuarioLoginDetailDTO {
     private String token;
 
     private Long expiresIn;
 
-    public LoginResponse() {
+    public UsuarioLoginDetailDTO() {
     }
 
-    public LoginResponse(String token, Long expiresIn) {
+    public UsuarioLoginDetailDTO(String token, Long expiresIn) {
         this.token = token;
         this.expiresIn = expiresIn;
     }
