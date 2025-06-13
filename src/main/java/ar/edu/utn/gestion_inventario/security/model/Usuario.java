@@ -33,7 +33,7 @@ public class Usuario implements UserDetails {
         this.id = id;
     }
 
-    public Usuario(String nombre, String apellido, String password, String email, String username) {
+    public Usuario(String nombre, String apellido, String username, String password) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.password = password;
