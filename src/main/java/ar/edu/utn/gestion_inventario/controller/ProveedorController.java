@@ -55,7 +55,7 @@ public class ProveedorController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     @DeleteMapping("/email/{email}")
-    public ResponseEntity<Void>eliminarProveedorPorEmail(@PathVariable String email){
+    public ResponseEntity<Void> eliminarProveedorPorEmail(@PathVariable String email){
         proveedorService.eliminarProveedorPorEmail(email);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

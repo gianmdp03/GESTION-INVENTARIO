@@ -8,14 +8,12 @@ import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.model.Proveedor;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProveedorRepository;
-import ar.edu.utn.gestion_inventario.validation.ProveedorValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Optional;
 
 import static ar.edu.utn.gestion_inventario.validation.ProveedorValidator.*;
 @Service
@@ -23,7 +21,10 @@ import static ar.edu.utn.gestion_inventario.validation.ProveedorValidator.*;
 public class ProveedorService {
     @Autowired
     private ProveedorRepository proveedorRepository;
+
+    @Autowired
     private ProductoRepository productoRepository;
+
     public ProveedorDetailDTO crearProveedor(ProveedorRequestDTO dto)
     {
         verificarSiYAExisteEmail(dto.getEmail(), proveedorRepository);
@@ -61,27 +62,46 @@ public class ProveedorService {
                 .orElseThrow(() -> new NotFoundException("El email ingresado no existe"));
     }
 
-    @Transactional
     public void eliminarProveedorPorId(Long id) {
 
         Proveedor proveedor = proveedorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Proveedor no encontrado con id: " + id));
 
         List<Producto> productos = productoRepository.findByProveedor(proveedor);
-
-        for (Producto producto : productos) {
-            producto.setProveedor(null);
+        if(productos.isEmpty())
+        {
+            proveedorRepository.deleteById(id);
         }
-        productoRepository.saveAll(productos);
-
-        proveedorRepository.deleteById(id);
+        else
+        {
+            for (Producto producto : productos) {
+                producto.setProveedor(null);
+            }
+            productoRepository.saveAll(productos);
+        }
     }
 
     @Transactional
     public void eliminarProveedorPorEmail(String email){
-        verificarSiExisteEmail(email,proveedorRepository);
+        Proveedor proveedor = proveedorRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Proveedor no encontrado con email: " + email));
+
+        List<Producto> productos = productoRepository.findByProveedor(proveedor);
+        if(productos.isEmpty())
+        {
+            proveedorRepository.deleteByEmail(email);
+        }
+        else
+        {
+            for (Producto producto : productos) {
+                producto.setProveedor(null);
+            }
+            productoRepository.saveAll(productos);
+        }
         proveedorRepository.deleteByEmail(email);
     }
+
+    @Transactional
     public ProveedorDetailDTO modificarProveedorPorEmail(String email, ProveedorRequestDTO proveedorRequestDTO){
         return proveedorRepository.findByEmail(email).map(proveedor -> {
             proveedor.setDireccion(proveedorRequestDTO.getDireccion());
