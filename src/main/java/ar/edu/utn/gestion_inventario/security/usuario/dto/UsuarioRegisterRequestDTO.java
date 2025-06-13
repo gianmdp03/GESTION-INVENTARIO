@@ -26,14 +26,7 @@ public class UsuarioRegisterRequestDTO {
         this.apellido = apellido;
         this.username = username;
         this.password = password;
-        if(rol.equalsIgnoreCase("ADMINISTRADOR") || rol.equalsIgnoreCase("EMPLEADO"))
-        {
-            this.rol = rol.toUpperCase();
-        }
-        else
-        {
-            this.rol = "EMPLEADO";
-        }
+        this.rol = rol;
     }
 
     public String getNombre() {

@@ -30,6 +30,14 @@ public class UsuarioService {
 
     public UsuarioRegisterDetailDTO crearUsuarioSinAutorizacion(UsuarioRegisterRequestDTO dto)
     {
+        if(dto.getRol().equalsIgnoreCase("ADMINISTRADOR") || dto.getRol().equalsIgnoreCase("EMPLEADO"))
+        {
+            dto.setRol(dto.getRol().toUpperCase());
+        }
+        else
+        {
+            dto.setRol("EMPLEADO");
+        }
         Usuario usuario = new Usuario(dto.getNombre(), dto.getApellido(), dto.getUsername(), passwordEncoder.encode(dto.getPassword()), Rol.valueOf(dto.getRol()));
         usuario = usuarioRepository.save(usuario);
 
@@ -37,6 +45,14 @@ public class UsuarioService {
     }
 
     public UsuarioRegisterDetailDTO crearUsuario(UsuarioRegisterRequestDTO dto) {
+        if(dto.getRol().equalsIgnoreCase("ADMINISTRADOR") || dto.getRol().equalsIgnoreCase("EMPLEADO"))
+        {
+            dto.setRol(dto.getRol().toUpperCase());
+        }
+        else
+        {
+            dto.setRol("EMPLEADO");
+        }
         Usuario usuario = new Usuario(dto.getNombre(), dto.getApellido(), dto.getUsername(), passwordEncoder.encode(dto.getPassword()), Rol.valueOf(dto.getRol()));
         usuario = usuarioRepository.save(usuario);
 
