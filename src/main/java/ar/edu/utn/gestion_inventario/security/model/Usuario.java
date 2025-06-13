@@ -1,10 +1,11 @@
 package ar.edu.utn.gestion_inventario.security.model;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario {
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,7 +18,6 @@ public class Usuario {
 
     @Column(nullable = false, unique = true)
     private String username;
-
 
     @Column(nullable = false)
     private String password;
