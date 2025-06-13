@@ -1,6 +1,6 @@
-package ar.edu.utn.gestion_inventario.security.model;
+package ar.edu.utn.gestion_inventario.security.usuario.model;
 
-import ar.edu.utn.gestion_inventario.security.enums.Rol;
+import ar.edu.utn.gestion_inventario.security.usuario.enums.Rol;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

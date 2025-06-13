@@ -1,7 +1,7 @@
 package ar.edu.utn.gestion_inventario.security.configuration;
 
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
-import ar.edu.utn.gestion_inventario.security.repository.UsuarioRepository;
+import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

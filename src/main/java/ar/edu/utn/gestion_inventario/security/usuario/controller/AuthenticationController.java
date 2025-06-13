@@ -1,11 +1,11 @@
-package ar.edu.utn.gestion_inventario.security.controller;
+package ar.edu.utn.gestion_inventario.security.usuario.controller;
 
 import ar.edu.utn.gestion_inventario.security.configuration.LoginResponse;
-import ar.edu.utn.gestion_inventario.security.dto.UsuarioLoginRequestDTO;
-import ar.edu.utn.gestion_inventario.security.dto.UsuarioRegisterRequestDTO;
-import ar.edu.utn.gestion_inventario.security.model.Usuario;
-import ar.edu.utn.gestion_inventario.security.service.AuthenticationService;
-import ar.edu.utn.gestion_inventario.security.service.JwtService;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioLoginRequestDTO;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioRegisterRequestDTO;
+import ar.edu.utn.gestion_inventario.security.usuario.model.Usuario;
+import ar.edu.utn.gestion_inventario.security.usuario.service.AuthenticationService;
+import ar.edu.utn.gestion_inventario.security.usuario.service.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

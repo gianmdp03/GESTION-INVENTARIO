@@ -1,6 +1,6 @@
 package ar.edu.utn.gestion_inventario.security.configuration;
 
-import ar.edu.utn.gestion_inventario.security.service.JwtService;
+import ar.edu.utn.gestion_inventario.security.usuario.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

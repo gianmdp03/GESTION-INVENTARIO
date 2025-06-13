@@ -1,10 +1,10 @@
-package ar.edu.utn.gestion_inventario.security.service;
+package ar.edu.utn.gestion_inventario.security.usuario.service;
 
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
-import ar.edu.utn.gestion_inventario.security.dto.UsuarioLoginRequestDTO;
-import ar.edu.utn.gestion_inventario.security.dto.UsuarioRegisterRequestDTO;
-import ar.edu.utn.gestion_inventario.security.model.Usuario;
-import ar.edu.utn.gestion_inventario.security.repository.UsuarioRepository;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioLoginRequestDTO;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioRegisterRequestDTO;
+import ar.edu.utn.gestion_inventario.security.usuario.model.Usuario;
+import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

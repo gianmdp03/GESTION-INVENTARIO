@@ -1,4 +1,4 @@
-package ar.edu.utn.gestion_inventario.security.service;
+package ar.edu.utn.gestion_inventario.security.usuario.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

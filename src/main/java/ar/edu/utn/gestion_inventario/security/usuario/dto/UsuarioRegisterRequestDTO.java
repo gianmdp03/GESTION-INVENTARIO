@@ -1,4 +1,4 @@
-package ar.edu.utn.gestion_inventario.security.dto;
+package ar.edu.utn.gestion_inventario.security.usuario.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
