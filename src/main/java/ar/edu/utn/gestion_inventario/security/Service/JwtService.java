@@ -1,4 +1,4 @@
-package ar.edu.utn.gestion_inventario.security.Service;
+package ar.edu.utn.gestion_inventario.security.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -61,7 +61,7 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token,UserDetails userDetails){
-        final String username = extractUsername(token);
+        String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()))&& !isTokenExpired(token);
     }
 
