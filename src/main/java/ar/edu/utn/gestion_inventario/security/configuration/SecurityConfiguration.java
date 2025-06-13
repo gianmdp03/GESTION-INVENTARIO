@@ -2,6 +2,7 @@ package ar.edu.utn.gestion_inventario.security.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -35,6 +36,28 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                        //USUARIO
+                        
+                        //PROVEEDOR
+                        .requestMatchers("/api/proveedor").hasRole("ADMINISTRADOR")
+                        .requestMatchers("/api/proveedor/*").hasRole("ADMINISTRADOR")
+                        .requestMatchers("/api/proveedor/email/*").hasRole("ADMINISTRADOR")
+                        //DESCUENTO
+                        .requestMatchers("/api/descuento").hasRole("ADMINISTRADOR")
+                        .requestMatchers("/api/descuento/*").hasRole("ADMINISTRADOR")
+                        .requestMatchers("/api/descuento/fecha").hasRole("ADMINISTRADOR")
+                        .requestMatchers("/api/descuento/expirados").hasRole("ADMINISTRADOR")
+                        //EXISTENCIA
+                        .requestMatchers("/api/existencia").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                        .requestMatchers("/api/existencia/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                        .requestMatchers("/api/existencia/stock/mas").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                        .requestMatchers("/api/existencia/stock/menos/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                        //PRODUCTO
+                        .requestMatchers("/api/producto").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                        .requestMatchers("/api/producto/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                        .requestMatchers("/api/producto/email/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                        .requestMatchers("/api/producto/categoria/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
+                        .requestMatchers("/api/producto/codigobarras/*").hasAnyRole("ADMINISTRADOR", "EMPLEADO")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
