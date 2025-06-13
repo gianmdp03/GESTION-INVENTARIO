@@ -6,6 +6,7 @@ import ar.edu.utn.gestion_inventario.security.dto.UsuarioRegisterRequestDTO;
 import ar.edu.utn.gestion_inventario.security.model.Usuario;
 import ar.edu.utn.gestion_inventario.security.service.AuthenticationService;
 import ar.edu.utn.gestion_inventario.security.service.JwtService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,14 +24,14 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Usuario> register(@RequestBody UsuarioRegisterRequestDTO dto) {
+    public ResponseEntity<Usuario> register(@Valid @RequestBody UsuarioRegisterRequestDTO dto) {
         Usuario usuarioRegistrado = authenticationService.iniciarSesion(dto);
 
         return ResponseEntity.ok(usuarioRegistrado);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody UsuarioLoginRequestDTO dto) {
+    public ResponseEntity<LoginResponse> authenticate(@Valid @RequestBody UsuarioLoginRequestDTO dto) {
         Usuario authenticatedUser = authenticationService.autenticar(dto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);

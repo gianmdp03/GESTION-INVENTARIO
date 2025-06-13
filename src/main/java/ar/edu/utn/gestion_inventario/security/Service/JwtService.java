@@ -74,7 +74,7 @@ public class JwtService {
 
     private Claims extractAllClaims(String token){
         return Jwts
-                .parser()
+                .parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
                 .parseClaimsJws(token)
@@ -85,5 +85,4 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode((secretKey));
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
 }
