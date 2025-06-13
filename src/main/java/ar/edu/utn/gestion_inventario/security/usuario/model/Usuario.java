@@ -39,14 +39,6 @@ public class Usuario implements UserDetails {
         this.id = id;
     }
 
-    public Usuario(String nombre, String apellido, String username, String password) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.password = password;
-        this.username = username;
-        this.rol = Rol.EMPLEADO;
-    }
-
     public Usuario(String nombre, String apellido, String username, String password, Rol rol) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -60,7 +52,7 @@ public class Usuario implements UserDetails {
         return List.of(new SimpleGrantedAuthority("ROLE_" + rol.name()));
     }
 
-    @Override
+    /*@Override
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();
     }
@@ -78,7 +70,7 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
-    }
+    }*/
 
     public Long getId() {
         return id;

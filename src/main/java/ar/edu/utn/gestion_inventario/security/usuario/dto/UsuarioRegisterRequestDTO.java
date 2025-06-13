@@ -1,5 +1,6 @@
 package ar.edu.utn.gestion_inventario.security.usuario.dto;
 
+import ar.edu.utn.gestion_inventario.security.usuario.enums.Rol;
 import jakarta.validation.constraints.NotBlank;
 
 public class UsuarioRegisterRequestDTO {
@@ -15,14 +16,24 @@ public class UsuarioRegisterRequestDTO {
     @NotBlank
     private String password;
 
+    private String rol;
+
     public UsuarioRegisterRequestDTO() {
     }
 
-    public UsuarioRegisterRequestDTO(String nombre, String apellido, String username, String password) {
+    public UsuarioRegisterRequestDTO(String nombre, String apellido, String username, String password, String rol) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.username = username;
         this.password = password;
+        if(rol.equalsIgnoreCase("ADMINISTRADOR") || rol.equalsIgnoreCase("EMPLEADO"))
+        {
+            this.rol = rol.toUpperCase();
+        }
+        else
+        {
+            this.rol = "EMPLEADO";
+        }
     }
 
     public String getNombre() {
@@ -55,5 +66,13 @@ public class UsuarioRegisterRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }

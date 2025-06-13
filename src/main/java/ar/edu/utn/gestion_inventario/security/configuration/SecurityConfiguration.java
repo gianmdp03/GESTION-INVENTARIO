@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         //USUARIO
-                        
+
                         //PROVEEDOR
                         .requestMatchers("/api/proveedor").hasRole("ADMINISTRADOR")
                         .requestMatchers("/api/proveedor/*").hasRole("ADMINISTRADOR")

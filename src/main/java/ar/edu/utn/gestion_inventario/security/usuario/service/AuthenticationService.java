@@ -2,7 +2,9 @@ package ar.edu.utn.gestion_inventario.security.usuario.service;
 
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioLoginRequestDTO;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioRegisterDetailDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioRegisterRequestDTO;
+import ar.edu.utn.gestion_inventario.security.usuario.enums.Rol;
 import ar.edu.utn.gestion_inventario.security.usuario.model.Usuario;
 import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,11 @@ public class AuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public Usuario iniciarSesion(UsuarioRegisterRequestDTO dto) {
-        Usuario usuario = new Usuario(dto.getNombre(), dto.getApellido(), dto.getUsername(), passwordEncoder.encode(dto.getPassword()));
+    public UsuarioRegisterDetailDTO crearUsuario(UsuarioRegisterRequestDTO dto) {
+        Usuario usuario = new Usuario(dto.getNombre(), dto.getApellido(), dto.getUsername(), passwordEncoder.encode(dto.getPassword()), Rol.valueOf(dto.getRol()));
+        usuario = usuarioRepository.save(usuario);
 
-        return usuarioRepository.save(usuario);
+        return new UsuarioRegisterDetailDTO(usuario.getNombre(), usuario.getApellido(), usuario.getUsername(), usuario.getRol());
     }
 
     public Usuario autenticar(UsuarioLoginRequestDTO dto) {
