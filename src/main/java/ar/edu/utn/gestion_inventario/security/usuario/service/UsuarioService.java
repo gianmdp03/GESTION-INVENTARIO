@@ -1,6 +1,7 @@
 package ar.edu.utn.gestion_inventario.security.usuario.service;
 
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioLoginDetailDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioLoginRequestDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioRegisterDetailDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioRegisterRequestDTO;
@@ -14,7 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthenticationService {
+public class UsuarioService {
+    @Autowired
+    private JwtService jwtService;
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -31,15 +35,13 @@ public class AuthenticationService {
         return new UsuarioRegisterDetailDTO(usuario.getNombre(), usuario.getApellido(), usuario.getUsername(), usuario.getRol());
     }
 
-    public Usuario autenticar(UsuarioLoginRequestDTO dto) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        dto.getUsername(),
-                        dto.getPassword()
-                )
-        );
-
-        return usuarioRepository.findByUsername(dto.getUsername())
+    public UsuarioLoginDetailDTO obtenerToken(UsuarioLoginRequestDTO dto) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));
+        Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())
                 .orElseThrow(() -> new NotFoundException("El nombre de usuario no existe"));
+
+        String jwtToken = jwtService.generateToken(usuario);
+
+        return new UsuarioLoginDetailDTO(jwtToken, jwtService.getJwtExpirationTime());
     }
 }

@@ -5,7 +5,7 @@ import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioLoginRequestDTO
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioRegisterDetailDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioRegisterRequestDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.model.Usuario;
-import ar.edu.utn.gestion_inventario.security.usuario.service.AuthenticationService;
+import ar.edu.utn.gestion_inventario.security.usuario.service.UsuarioService;
 import ar.edu.utn.gestion_inventario.security.usuario.service.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,26 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/auth")
 @RestController
-public class AuthenticationController {
+public class UsuarioController {
     @Autowired
-    private JwtService jwtService;
+    private UsuarioService usuarioService;
 
-    @Autowired
-    private AuthenticationService authenticationService;
-
-    @PostMapping("/signup")
-    public ResponseEntity<UsuarioRegisterDetailDTO> register(@Valid @RequestBody UsuarioRegisterRequestDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(authenticationService.crearUsuario(dto));
+    @PostMapping("/registrar")
+    public ResponseEntity<UsuarioRegisterDetailDTO> crearUsuario(@Valid @RequestBody UsuarioRegisterRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.crearUsuario(dto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UsuarioLoginDetailDTO> authenticate(@Valid @RequestBody UsuarioLoginRequestDTO dto) {
-        Usuario authenticatedUser = authenticationService.autenticar(dto);
-
-        String jwtToken = jwtService.generateToken(authenticatedUser);
-
-        UsuarioLoginDetailDTO loginResponse = new UsuarioLoginDetailDTO(jwtToken, jwtService.getJwtExpirationTime());
-
-        return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
+    public ResponseEntity<UsuarioLoginDetailDTO> obtenerToken(@Valid @RequestBody UsuarioLoginRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.obtenerToken(dto));
     }
 }
