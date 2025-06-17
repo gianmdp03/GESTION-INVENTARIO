@@ -93,6 +93,7 @@ public class UsuarioService {
         return lista;
     }
 
+    @Transactional
     public UsuarioRegisterDetailDTO convertirEnAdministrador(String username)
     {
         return usuarioRepository.findByUsername(username).map(usuario -> {
