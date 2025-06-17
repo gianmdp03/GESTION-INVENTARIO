@@ -27,7 +27,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.crearUsuario(dto));
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<UsuarioLoginDetailDTO> obtenerToken(@Valid @RequestBody UsuarioLoginRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.obtenerToken(dto));
     }
