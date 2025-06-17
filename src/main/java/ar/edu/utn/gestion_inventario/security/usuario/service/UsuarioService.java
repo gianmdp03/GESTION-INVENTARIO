@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static ar.edu.utn.gestion_inventario.security.usuario.validation.UsuarioValidator.*;
 
 @Service
@@ -81,5 +83,13 @@ public class UsuarioService {
             user = usuarioRepository.save(user);
             return new UsuarioRegisterDetailDTO(user.getNombre(), user.getApellido(), user.getUsername(), user.getRol());
         }).orElseThrow(() -> new NotFoundException("El nombre de usuario ingresado no corresponde a un usuario existente"));
+    }
+
+    public List<UsuarioRegisterDetailDTO> listarUsuarios()
+    {
+        List<UsuarioRegisterDetailDTO> lista = usuarioRepository.findAll().stream().map(usuario ->
+                new UsuarioRegisterDetailDTO(usuario.getNombre(), usuario.getApellido(), usuario.getUsername(), usuario.getRol())).toList();
+        comprobarListaVacia(lista);
+        return lista;
     }
 }
