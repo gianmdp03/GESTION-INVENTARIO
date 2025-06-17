@@ -9,10 +9,14 @@ import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.repository.ExistenciaRepository;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 import static ar.edu.utn.gestion_inventario.validation.ExistenciaValidator.*;
@@ -49,30 +53,36 @@ public class ExistenciaService {
                 new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
     }
 
-    public List<ExistenciaListDTO> listarExistenciasConMasCantidad(Long cantidad)
-    {
-        Long total = existenciaRepository.count();
-        if(cantidad>total)
-        {
-            cantidad = total;
-        }
-        List<Existencia> lista = existenciaRepository.findAllByCantidadGreaterThanOrderByCantidadDesc(cantidad);
+    public List<ExistenciaListDTO> listarExistenciasConMasCantidad(Long cantidad) {
+        List<Existencia> lista = existenciaRepository.findAll(Sort.by(Sort.Direction.DESC, "cantidad"));
         verificarListaVacia(lista);
-        return lista.stream().map(existencia -> new ExistenciaListDTO(existencia.getId(),
-                existencia.getCantidad(), existencia.getFechaEntrada(), existencia.getProducto().getNombre())).toList();
+
+        List<Existencia> topN = lista.stream()
+                .limit(cantidad)
+                .toList();
+
+        return topN.stream().map(existencia -> new ExistenciaListDTO(
+                existencia.getId(),
+                existencia.getCantidad(),
+                existencia.getFechaEntrada(),
+                existencia.getProducto().getNombre()
+        )).toList();
     }
 
-    public List<ExistenciaListDTO> listarExistenciasConMenosCantidad(Long cantidad)
-    {
-        Long total = existenciaRepository.count();
-        if(cantidad<total)
-        {
-            cantidad = total;
-        }
-        List<Existencia> lista = existenciaRepository.findAllByCantidadLessThanOrderByCantidadAsc(cantidad);
+    public List<ExistenciaListDTO> listarExistenciasConMenosCantidad(Long cantidad) {
+        List<Existencia> lista = existenciaRepository.findAll(Sort.by(Sort.Direction.ASC, "cantidad"));
         verificarListaVacia(lista);
-        return lista.stream().map(existencia ->
-                new ExistenciaListDTO(existencia.getId(), existencia.getCantidad(), existencia.getFechaVencimiento(), existencia.getProducto().getNombre())).toList();
+
+        List<Existencia> topN = lista.stream()
+                .limit(cantidad)
+                .toList();
+
+        return topN.stream().map(existencia -> new ExistenciaListDTO(
+                existencia.getId(),
+                existencia.getCantidad(),
+                existencia.getFechaEntrada(),
+                existencia.getProducto().getNombre()
+        )).toList();
     }
 
     public ExistenciaDetailDTO visualizarExistenciaPorId(Long id)
