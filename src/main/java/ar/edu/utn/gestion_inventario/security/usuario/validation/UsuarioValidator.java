@@ -2,7 +2,10 @@ package ar.edu.utn.gestion_inventario.security.usuario.validation;
 
 import ar.edu.utn.gestion_inventario.exception.ConflictException;
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioRegisterDetailDTO;
 import ar.edu.utn.gestion_inventario.security.usuario.repository.UsuarioRepository;
+
+import java.util.List;
 
 public class UsuarioValidator {
     public static void comprobarSiExisteUsername(String username, UsuarioRepository usuarioRepository)
@@ -21,4 +24,11 @@ public class UsuarioValidator {
         }
     }
 
+    public static void comprobarListaVacia(List<UsuarioRegisterDetailDTO> usuarios)
+    {
+        if(usuarios.isEmpty())
+        {
+            throw new NotFoundException("No hay usuarios cargados en el sistema");
+        }
+    }
 }
