@@ -92,4 +92,13 @@ public class UsuarioService {
         comprobarListaVacia(lista);
         return lista;
     }
+
+    public UsuarioRegisterDetailDTO convertirEnAdministrador(String username)
+    {
+        return usuarioRepository.findByUsername(username).map(usuario -> {
+            usuario.setRol(Rol.ADMINISTRADOR);
+            usuario = usuarioRepository.save(usuario);
+            return new UsuarioRegisterDetailDTO(usuario.getNombre(), usuario.getApellido(), usuario.getUsername(), usuario.getRol());
+        }).orElseThrow(() -> new NotFoundException("El nombre de usuario ingresado no corresponde a un usuario existente"));
+    }
 }
