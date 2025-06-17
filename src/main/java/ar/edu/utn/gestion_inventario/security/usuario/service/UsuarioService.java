@@ -13,6 +13,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import static ar.edu.utn.gestion_inventario.security.usuario.validation.UsuarioValidator.*;
 
 @Service
 public class UsuarioService {
@@ -67,5 +70,16 @@ public class UsuarioService {
         String jwtToken = jwtService.generateToken(usuario);
 
         return new UsuarioLoginDetailDTO(jwtToken, jwtService.getJwtExpirationTime());
+    }
+
+    @Transactional
+    public UsuarioRegisterDetailDTO modificarUsername(String usernameActual, String usernameNuevo)
+    {
+        comprobarSiExisteUsername(usernameNuevo, usuarioRepository);
+        return usuarioRepository.findByUsername(usernameActual).map(user -> {
+            user.setUsername(usernameNuevo);
+            user = usuarioRepository.save(user);
+            return new UsuarioRegisterDetailDTO(user.getNombre(), user.getApellido(), user.getUsername(), user.getRol());
+        }).orElseThrow(() -> new NotFoundException("El nombre de usuario ingresado no corresponde a un usuario existente"));
     }
 }
