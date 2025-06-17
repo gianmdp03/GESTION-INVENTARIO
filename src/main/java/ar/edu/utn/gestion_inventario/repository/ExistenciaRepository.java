@@ -12,9 +12,11 @@ import org.springframework.data.domain.Page;
 import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 @Repository
 public interface ExistenciaRepository extends JpaRepository<Existencia, Long> {
     void deleteByFechaVencimientoBefore(LocalDate fecha);
     List<Existencia> findAllByCantidad(int cantidad);
+    List<Existencia> findByProducto(Producto producto);
 }

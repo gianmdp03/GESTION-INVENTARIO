@@ -3,9 +3,11 @@ package ar.edu.utn.gestion_inventario.service;
 import ar.edu.utn.gestion_inventario.dto.producto.*;
 import ar.edu.utn.gestion_inventario.exception.NotFoundException;
 import ar.edu.utn.gestion_inventario.model.Descuento;
+import ar.edu.utn.gestion_inventario.model.Existencia;
 import ar.edu.utn.gestion_inventario.model.Producto;
 import ar.edu.utn.gestion_inventario.model.Proveedor;
 import ar.edu.utn.gestion_inventario.repository.DescuentoRepository;
+import ar.edu.utn.gestion_inventario.repository.ExistenciaRepository;
 import ar.edu.utn.gestion_inventario.repository.ProductoRepository;
 import ar.edu.utn.gestion_inventario.repository.ProveedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class ProductoService {
 
     @Autowired
     private ProveedorRepository proveedorRepository;
+
+    @Autowired
+    private ExistenciaRepository existenciaRepository;
 
     public ProductoDetailDTO crearProducto(ProductoRequestDTO dto)
     {
@@ -102,12 +107,17 @@ public class ProductoService {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Producto no encontrado"));
 
+        List<Existencia> existencias = existenciaRepository.findByProducto(producto);
+        existenciaRepository.deleteAll(existencias);
+
         Descuento descuento = producto.getDescuento();
         if (descuento != null) {
             descuento.getProductos().remove(producto);
         }
+
         productoRepository.delete(producto);
     }
+
 
     public List<ProductoListDTO> buscarPorProveedor(String email)
     {
