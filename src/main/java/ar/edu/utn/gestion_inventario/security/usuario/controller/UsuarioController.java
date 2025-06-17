@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/api/auth")
 @RestController
 public class UsuarioController {
@@ -29,10 +31,35 @@ public class UsuarioController {
     public ResponseEntity<UsuarioLoginDetailDTO> obtenerToken(@Valid @RequestBody UsuarioLoginRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.obtenerToken(dto));
     }
-    
-    @PatchMapping("/username")
+
+    @PatchMapping
     public ResponseEntity<UsuarioRegisterDetailDTO> modificarUsername(@Valid @RequestBody UsuarioPatchDTO dto)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.modificarUsername(dto.getUsernameActual(), dto.getUsernameNuevo()));
+    }
+
+    @PatchMapping("/{username}")
+    public ResponseEntity<UsuarioRegisterDetailDTO> convertirEnAdministrador(@PathVariable String username)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.convertirEnAdministrador(username));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UsuarioRegisterDetailDTO>> listarUsuario()
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarUsuarios());
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<UsuarioRegisterDetailDTO> mostrarUsuarioPorUsername(@PathVariable String username)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.mostrarUsuarioPorUsername(username));
+    }
+
+    @DeleteMapping("/{username}")
+    public ResponseEntity<Void> eliminarPorUsername(@PathVariable String username)
+    {
+        usuarioService.eliminarUsuarioPorUsername(username);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
