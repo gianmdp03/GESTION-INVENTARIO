@@ -108,4 +108,12 @@ public class UsuarioService {
                 new UsuarioRegisterDetailDTO(usuario.getNombre(), usuario.getApellido(), usuario.getUsername(), usuario.getRol()))
                 .orElseThrow(() -> new NotFoundException("El username ingresado no existe"));
     }
+
+    @Transactional
+    public void eliminarUsuarioPorUsername(String username)
+    {
+        comprobarUsername(username, usuarioRepository);
+        usuarioRepository.deleteByUsername(username);
+    }
+
 }
