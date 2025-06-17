@@ -74,17 +74,6 @@ public class UsuarioService {
         return new UsuarioLoginDetailDTO(jwtToken, jwtService.getJwtExpirationTime());
     }
 
-    @Transactional
-    public UsuarioRegisterDetailDTO modificarUsername(String usernameActual, String usernameNuevo)
-    {
-        comprobarSiExisteUsername(usernameNuevo, usuarioRepository);
-        return usuarioRepository.findByUsername(usernameActual).map(user -> {
-            user.setUsername(usernameNuevo);
-            user = usuarioRepository.save(user);
-            return new UsuarioRegisterDetailDTO(user.getNombre(), user.getApellido(), user.getUsername(), user.getRol());
-        }).orElseThrow(() -> new NotFoundException("El nombre de usuario ingresado no corresponde a un usuario existente"));
-    }
-
     public List<UsuarioRegisterDetailDTO> listarUsuarios()
     {
         List<UsuarioRegisterDetailDTO> lista = usuarioRepository.findAll().stream().map(usuario ->

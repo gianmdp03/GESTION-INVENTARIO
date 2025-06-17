@@ -31,13 +31,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioLoginDetailDTO> obtenerToken(@Valid @RequestBody UsuarioLoginRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.obtenerToken(dto));
     }
-
-    @PatchMapping
-    public ResponseEntity<UsuarioRegisterDetailDTO> modificarUsername(@Valid @RequestBody UsuarioPatchDTO dto)
-    {
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.modificarUsername(dto.getUsernameActual(), dto.getUsernameNuevo()));
-    }
-
+    
     @PatchMapping("/{username}")
     public ResponseEntity<UsuarioRegisterDetailDTO> convertirEnAdministrador(@PathVariable String username)
     {
