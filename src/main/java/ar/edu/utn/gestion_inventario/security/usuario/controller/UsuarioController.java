@@ -1,12 +1,7 @@
 package ar.edu.utn.gestion_inventario.security.usuario.controller;
 
-import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioLoginDetailDTO;
-import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioLoginRequestDTO;
-import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioRegisterDetailDTO;
-import ar.edu.utn.gestion_inventario.security.usuario.dto.UsuarioRegisterRequestDTO;
-import ar.edu.utn.gestion_inventario.security.usuario.model.Usuario;
+import ar.edu.utn.gestion_inventario.security.usuario.dto.*;
 import ar.edu.utn.gestion_inventario.security.usuario.service.UsuarioService;
-import ar.edu.utn.gestion_inventario.security.usuario.service.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,5 +28,11 @@ public class UsuarioController {
     @GetMapping("/login")
     public ResponseEntity<UsuarioLoginDetailDTO> obtenerToken(@Valid @RequestBody UsuarioLoginRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.obtenerToken(dto));
+    }
+    
+    @PatchMapping("/username")
+    public ResponseEntity<UsuarioRegisterDetailDTO> modificarUsername(@Valid @RequestBody UsuarioPatchDTO dto)
+    {
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.modificarUsername(dto.getUsernameActual(), dto.getUsernameNuevo()));
     }
 }
