@@ -150,6 +150,9 @@ public class ProductoService {
         Producto producto = productoRepository.findByCodigoBarras(codigoBarra)
                 .orElseThrow(() -> new NotFoundException("Producto no encontrado"));
 
+       List<Existencia> existencias = existenciaRepository.findByProducto(producto);
+       existenciaRepository.deleteAll(existencias);
+
         Descuento descuento = producto.getDescuento();
         if (descuento != null) {
             descuento.getProductos().remove(producto);
