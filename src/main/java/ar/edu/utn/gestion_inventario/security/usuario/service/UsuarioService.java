@@ -101,4 +101,11 @@ public class UsuarioService {
             return new UsuarioRegisterDetailDTO(usuario.getNombre(), usuario.getApellido(), usuario.getUsername(), usuario.getRol());
         }).orElseThrow(() -> new NotFoundException("El nombre de usuario ingresado no corresponde a un usuario existente"));
     }
+
+    public UsuarioRegisterDetailDTO mostrarUsuarioPorUsername(String username)
+    {
+        return usuarioRepository.findByUsername(username).map(usuario ->
+                new UsuarioRegisterDetailDTO(usuario.getNombre(), usuario.getApellido(), usuario.getUsername(), usuario.getRol()))
+                .orElseThrow(() -> new NotFoundException("El username ingresado no existe"));
+    }
 }
